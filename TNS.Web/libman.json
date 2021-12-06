@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "angular-ui-router@1.0.30",
+      "destination": "Assets/libs/angular-ui-router/"
+    },
+    {
+      "library": "angular.js@1.8.2",
+      "destination": "Assets/libs/angular.js/"
+    },
+    {
+      "library": "angular-local-storage@0.7.1",
+      "destination": "Assets/libs/angular-local-storage/"
+    },
+    {
+      "library": "angular-loading-bar@0.9.0",
+      "destination": "Assets/libs/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "Assets/libs/toastr.js/"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+﻿@model TNS.Web.Models.RegisterViewModel
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Xmee | Login and Register Form Html Templates</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/Assets/LoginClient/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Assets/LoginClient/css/bootstrap.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="/Assets/LoginClient/css/fontawesome-all.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="/Assets/LoginClient/font/flaticon.css">
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/Assets/LoginClient/style.css">
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <section class="fxt-template-animation fxt-template-layout20">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-lg-6 col-12 fxt-none-991 fxt-bg-img" data-bg-image="/Assets/LoginClient/img/figure/bg20-l.jpg"></div>
+                <div class="col-xl-5 col-lg-6 col-12 fxt-bg-color">
+                    <div class="fxt-content">
+                        <div class="fxt-header">
+                            <a href="login-20.html" class="fxt-logo"><img src="/Assets/LoginClient/img/logo-20.png" alt="Logo"></a>
+                            @*                            <ul class="fxt-socials">
+                                    <li class="fxt-google"><a href="#" title="google"><i class="fab fa-google-plus-g"></i><span>Google +</span></a></li>
+                                    <li class="fxt-twitter"><a href="#" title="twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a></li>
+                                    <li class="fxt-facebook"><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a></li>
+                                </ul>*@
+                        </div>
+                        <div class="fxt-form">
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken();
+                                @Html.ValidationSummary(false, "", new { @class = "error" })
+
+                                if (ViewData["SuccessMsg"] != null)
+                                {
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Chúc mừng bạn! </strong> đã đăng ký thành công.
+                                        <br />Vui lòng click <a href="/dang-nhap.html">vào đây </a>để đăng nhập.
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-1">
+                                        @Html.TextBoxFor(model => model.Fullname, new { @placeholder = "Họ tên", @name = "f-name", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-1">
+                                        <label>Giới tính: </label>
+                                        @Html.RadioButtonFor(model => model.Gender, "Nam", true) @Html.Label("Nam")
+                                        @Html.RadioButtonFor(model => model.Gender, "Nữ", false) @Html.Label("Nữ")
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-1">
+                                        @Html.TextBoxFor(model => model.Birthdate, new { @placeholder = "Ngày sinh", @id = "Birthday", type = "date", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-2">
+                                        @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email", @name = "email", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-3">
+                                        @Html.TextBoxFor(model => model.Address, new { @placeholder = "Địa chỉ", @name = "Address", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @placeholder = "Số điện thoại", @name = "phone", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        @Html.TextBoxFor(model => model.Username, new { @placeholder = "Tài khoản", @name = "username", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        @Html.PasswordFor(model => model.Password, new { @placeholder = "Mật khẩu", @name = "password", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div><div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                        @Html.PasswordFor(model => model.PasswordAgain, new { @placeholder = "Nhập lại mật khẩu", @name = "password", @required = "required", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="fxt-transformY-50 fxt-transition-delay-6">
+                                        <button type="submit" value="submit" class="fxt-btn-fill">Đăng ký</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="fxt-footer">
+                            <div class="fxt-transformY-50 fxt-transition-delay-7">
+                                <p>Bạn đã có tài khoản?<a href="dang-nhap.html" class="switcher-text2 inline-text">Đăng nhập</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- jquery-->
+    <script src="/Assets/LoginClient/js/jquery-3.5.0.min.js"></script>
+    <!-- Popper js -->
+    <script src="/Assets/LoginClient/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/Assets/LoginClient/js/bootstrap.min.js"></script>
+    <!-- Imagesloaded js -->
+    <script src="/Assets/LoginClient/js/imagesloaded.pkgd.min.js"></script>
+    <!-- Validator js -->
+    <script src="/Assets/LoginClient/js/validator.min.js"></script>
+    <!-- Custom Js -->
+    <script src="/Assets/LoginClient/js/main.js"></script>
+</body>
+
+</html>
