@@ -60,8 +60,8 @@
     <!-- Sparkline -->
     <script src="~/Assets/Admin/plugins/sparklines/sparkline.js"></script>
     <!-- JQVMap -->
-@*    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-    <script src="~/Assets/Admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>*@
+    @*    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+        <script src="~/Assets/Admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>*@
     <!-- jQuery Knob Chart -->
     <script src="~/Assets/Admin/plugins/jquery-knob/jquery.knob.min.js"></script>
     <!-- daterangepicker -->
@@ -78,7 +78,7 @@
     <!-- AdminLTE for demo purposes -->
     @*<script src="~/Assets/Admin/dist/js/demo.js"></script>*@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="~/Assets/Admin/dist/js/pages/dashboard.js"></script>
+    @*<script src="~/Assets/Admin/dist/js/pages/dashboard.js"></script>*@
 
     <!-- DataTables  & Plugins -->
     <script src="~/Assets/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -94,50 +94,51 @@
     <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Page specific script -->
-    <script>
-        $(function () {
-            $("#example1")
-                .DataTable({
-                    responsive: true,
-                    lengthChange: false,
-                    autoWidth: false,
-                    buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-                })
-                .buttons()
-                .container()
-                .appendTo("#example1_wrapper .col-md-6:eq(0)");
-            $("#example2").DataTable({
-                paging: true,
-                lengthChange: false,
-                searching: false,
-                ordering: true,
-                info: true,
-                autoWidth: false,
-                responsive: true,
-            });
-        });
-    </script>
-
     <!--Begin embed AngularJS-->
-    <script src="~/Assets/libs/angular.js/angular.js"></script>
+    <script src="/Assets/libs/angular.js/angular.js"></script>
     <script src="~/Assets/libs/angular-ui-router/angular-ui-router.js"></script>
     <script src="~/Assets/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/Assets/libs/checklist-model/checklist-model.js"></script>
+    <script src="~/Assets/libs/bootbox.js/bootbox.js"></script>
+    <script src="~/Assets/libs/bootbox.js/ngBootbox.js"></script>
     <script src="~/Assets/libs/angular-local-storage/angular-local-storage.js"></script>
     <script src="~/Assets/libs/loading-bar.js"></script>
 
     <!--Begin embed components AngularJS-->
     <script src="~/app/shared/modules/TNS.common.js"></script>
+    <script src="~/app/shared/filters/status.filter.js"></script>
+    <script src="~/app/shared/filters/statusOrderFilter.js"></script>
     <script src="~/app/shared/services/apiService.js"></script>
     <script src="~/app/shared/services/notificationService.js"></script>
     <script src="~/app/shared/services/authData.js"></script>
     <script src="~/app/shared/services/authenticationService.js"></script>
     <script src="~/app/shared/services/loginService.js"></script>
     <script src="~/app/shared/services/commonService.js"></script>
+    <script src="/app/shared/directive/pagerDirective.js"></script>
+    <script src="~/app/components/application_groups/applicationGroup.module.js"></script>
+    <script src="~/app/components/application_roles/applicationRole.module.js"></script>
+    <script src="~/app/components/application_users/applicationUser.module.js"></script>
+    <script src="~/app/components/orders/order.module.js"></script>
 
     <script src="~/app/app.js"></script>
     <script src="~/app/components/home/rootController.js"></script>
 
     <script src="~/app/components/home/homeController.js"></script>
     <script src="~/app/components/login/loginController.js"></script>
+
+    <script src="~/app/components/application_groups/applicationGroupAddController.js"></script>
+    <script src="~/app/components/application_roles/applicationRoleAddController.js"></script>
+    <script src="~/app/components/application_users/applicationUserAddController.js"></script>
+    <script src="~/app/components/application_groups/applicationGroupListController.js"></script>
+    <script src="~/app/components/application_roles/applicationRoleListController.js"></script>
+    <script src="~/app/components/application_users/applicationUserListController.js"></script>
+    <script src="~/app/components/application_groups/applicationGroupEditController.js"></script>
+    <script src="~/app/components/application_roles/applicationRoleEditController.js"></script>
+    <script src="~/app/components/application_users/applicationUserEditController.js"></script>
+    <script src="~/app/components/application_users/applicationUserDetailController.js"></script>
+    <script src="~/app/components/orders/orderAddController.js"></script>
+    <script src="~/app/components/orders/orderEditController.js"></script>
+    <script src="~/app/components/orders/orderListController.js"></script>
+    <script src="~/app/shared/orders/addorder.js"></script>
 </body>
 </html>

@@ -1,0 +1,219 @@
+﻿   <!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Tạo đơn hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Tạo đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Thông tin đơn hàng</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div id="actions" class="row">
+                    <div class="col-lg-6">
+                        <div class="btn-group w-100">
+                            <span id="addRow" class="btn btn-success col fileinput-button">
+                                <i class="fas fa-plus"></i>
+                                <span>Thêm sản phẩm</span>
+                            </span>
+                            <button type="submit" class="btn btn-primary col start">
+                                <i class="fas fa-upload"></i>
+                                <span>Upload</span>
+                            </button>
+                            <button type="reset" class="btn btn-warning col cancel">
+                                <i class="fas fa-download"></i>
+                                <span>Tải file mẫu</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex align-items-center">
+                        <div class="fileupload-process w-100">
+                            <div id="total-progress"
+                                 class="progress progress-striped active"
+                                 role="progressbar"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"
+                                 aria-valuenow="0">
+                                <div class="progress-bar progress-bar-success"
+                                     style="width: 0%"
+                                     data-dz-uploadprogress></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table id="addorder" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Link sản phẩm</th>
+                            <th style="width: 20%">Ảnh sản phẩm</th>
+                            <th style="width: 20%">Màu sắc/Kích thước</th>
+                            <th style="width: 10%">Số lượng</th>
+                            <th style="width: 20%">Yêu cầu thêm</th>
+                            <th style="width: 10%">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <tr>
+                            <td>
+                                <a>
+                                    <input id="ProductLink" class="form-control"
+                                           type="text"
+                                           placeholder="Nhập link sản phẩm" />
+                                </a>
+                            </td>
+                            <td>
+
+                                    <div id="ProductImage" class="custom-file">
+                                        <input type="file"
+                                               class="custom-file-input"
+                                               id="ProductImage" />
+                                        <label class="custom-file-label"
+                                               for="ProductImage">Choose file</label>
+                                    </div>
+
+                            </td>
+                            <td>
+                                <a>
+                                    <input id="ProductDetail" class="form-control"
+                                           type="text"
+                                           placeholder="Chọn màu sắc, kích thước" />
+                                </a>
+                            </td>
+                            <td>
+                                <a>
+                                    <input id="Quantity" class="form-control"
+                                           type="number"/>
+                                </a>
+                            </td>
+                            <td>
+                                <a>
+                                    <input id="Description" class="form-control"
+                                           type="text"
+                                           placeholder="Yêu cầu thêm" />
+                                </a>
+                            </td>
+                            <td>
+                                <button class="btn btn-block btn-danger btnRemove"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+<!--
+                    <tfoot>
+                        <tr>
+                            <th>Link sản phẩm</th>
+                            <th>Ảnh sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu sắc/Kích thước</th>
+                            <th>Số lượng</th>
+                            <th>Yêu cầu thêm</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </tfoot>-->
+                </table>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-default float-right">
+                    <i class="fas fa-times"></i>
+                    Hủy
+                </button>
+                <button style="margin-right: 10px"
+                        type="submit"
+                        class="btn btn-primary float-right">
+                    <i class="fas fa-edit"></i>
+                    Tạo đơn hàng
+                </button>
+            </div>
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<script>
+    $(document).ready(function () {
+
+        $("#addorder").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            language: {
+                emptyTable: "Chưa có sản phẩm nào, vui lòng chọn Thêm sản phẩm"
+            }
+        });
+
+        $('#addRow').on('click', function () {
+            // Adding a row inside the tbody.
+            $('#tbody').append(`            <tr>
+                                        <td>
+                                            <a>
+                                                <input id="ProductLink" class="form-control"
+                                                       type="text"
+                                                       placeholder="Nhập link sản phẩm" />
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                                <div id="ProductImage" class="custom-file">
+                                                    <input type="file"
+                                                           class="custom-file-input"
+                                                           id="ProductImage" />
+                                                    <label class="custom-file-label"
+                                                           for="ProductImage">Choose file</label>
+                                                </div>
+
+                                        </td>
+                                        <td>
+                                            <a>
+                                                <input id="ProductDetail" class="form-control"
+                                                       type="text"
+                                                       placeholder="Chọn màu sắc, kích thước" />
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a>
+                                                <input id="Quantity" class="form-control"
+                                                       type="number" />
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a>
+                                                <input id="Description" class="form-control"
+                                                       type="text"
+                                                       placeholder="Yêu cầu thêm" />
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-block btn-danger btnRemove"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>`);
+        });
+
+ 
+
+    });
+
+</script>

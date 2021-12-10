@@ -25,20 +25,14 @@ namespace TNS.Data
         public DbSet<Order> Orders { set; get; }
         public DbSet<OrderDetail> OrderDetails { set; get; }
         public DbSet<Page> Pages { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<PostCategory> PostCategories { get; set; }
-        public DbSet<PostTag> PostTags { get; set; }
+
       
         public DbSet<Slide> Slides { get; set; }
         public DbSet<SupportOnline> SupportOnlines { get; set; }
         public DbSet<SystemConfig> SystemConfigs { get; set; }
-        public DbSet<Tag> Tags { get; set; }
         public DbSet<ContactDetail> ContactDetails { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<VisitorStatistic> VisitorStatistics { get; set; }
-
-        public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<TrackOrder> TrackOrders { get; set; }
 
         public static TNSExampleDbContext Create()
         {

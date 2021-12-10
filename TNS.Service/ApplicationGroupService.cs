@@ -8,40 +8,86 @@ using TNS.Model.Models;
 
 namespace TNS.Service
 {
-    public interface IApplicationGroupService : ICrudService<ApplicationGroup>, IGetDataService<ApplicationGroup>
+    public interface IApplicationGroupService
     {
         ApplicationGroup GetDetail(int id);
 
         IEnumerable<ApplicationGroup> GetAll(int page, int pageSize, out int totalRow, string filter);
 
-        bool AddUserToGroups(IEnumerable<ApplicationUserGroup> userGroups, string userId);
+        IEnumerable<ApplicationGroup> GetAll();
+
+        ApplicationGroup Add(ApplicationGroup appGroup);
+
+        void Update(ApplicationGroup appGroup);
+
+        ApplicationGroup Delete(int id);
+
+        bool AddUserToGroups(IEnumerable<ApplicationUserGroup> groups, string userId);
 
         IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId);
 
         IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId);
 
-        void IsDeleted(int id);
+        void Save();
     }
-
     public class ApplicationGroupService : IApplicationGroupService
     {
         private IApplicationGroupRepository _appGroupRepository;
-        private IApplicationUserGroupRepository _appUserGroupRepository;
         private IUnitOfWork _unitOfWork;
+        private IApplicationUserGroupRepository _appUserGroupRepository;
 
-        public ApplicationGroupService(IApplicationGroupRepository appGroupRepository,
-           IUnitOfWork unitOfWork, IApplicationUserGroupRepository appUserGroupRepository)
+        public ApplicationGroupService(IUnitOfWork unitOfWork,
+            IApplicationUserGroupRepository appUserGroupRepository,
+            IApplicationGroupRepository appGroupRepository)
         {
-            _appGroupRepository = appGroupRepository;
-            _unitOfWork = unitOfWork;
-            _appUserGroupRepository = appUserGroupRepository;
+            this._appGroupRepository = appGroupRepository;
+            this._appUserGroupRepository = appUserGroupRepository;
+            this._unitOfWork = unitOfWork;
         }
 
         public ApplicationGroup Add(ApplicationGroup appGroup)
         {
             if (_appGroupRepository.CheckContains(x => x.Name == appGroup.Name))
-                throw new NameDuplicatedException("Tên nhóm không được trùng nhau.");
+                throw new NameDuplicatedException("Tên không được trùng");
             return _appGroupRepository.Add(appGroup);
+        }
+
+        public ApplicationGroup Delete(int id)
+        {
+            var appGroup = this._appGroupRepository.GetSingleById(id);
+            return _appGroupRepository.Delete(appGroup);
+        }
+
+        public IEnumerable<ApplicationGroup> GetAll()
+        {
+            return _appGroupRepository.GetAll();
+        }
+
+        public IEnumerable<ApplicationGroup> GetAll(int page, int pageSize, out int totalRow, string filter = null)
+        {
+            var query = _appGroupRepository.GetAll();
+            if (!string.IsNullOrEmpty(filter))
+                query = query.Where(x => x.Name.Contains(filter));
+
+            totalRow = query.Count();
+            return query.OrderBy(x => x.Name).Skip(page * pageSize).Take(pageSize);
+        }
+
+        public ApplicationGroup GetDetail(int id)
+        {
+            return _appGroupRepository.GetSingleById(id);
+        }
+
+        public void Save()
+        {
+            _unitOfWork.Commit();
+        }
+
+        public void Update(ApplicationGroup appGroup)
+        {
+            if (_appGroupRepository.CheckContains(x => x.Name == appGroup.Name && x.ID != appGroup.ID))
+                throw new NameDuplicatedException("Tên không được trùng");
+            _appGroupRepository.Update(appGroup);
         }
 
         public bool AddUserToGroups(IEnumerable<ApplicationUserGroup> userGroups, string userId)
@@ -54,38 +100,6 @@ namespace TNS.Service
             return true;
         }
 
-        public void Delete(int id)
-        {
-            var appGroup = FindById(id);
-            _appGroupRepository.Delete(appGroup);
-        }
-
-        public ApplicationGroup FindById(int id)
-        {
-            var appGroup = _appGroupRepository.GetSingleById(id);
-            return appGroup;
-        }
-
-        public IEnumerable<ApplicationGroup> GetAll(string keyword = null)
-        {
-            return _appGroupRepository.GetMulti(x => x.IsDeleted == false);
-        }
-
-        public IEnumerable<ApplicationGroup> GetAll(int page, int pageSize, out int totalRow, string filter)
-        {
-            var query = _appGroupRepository.GetMulti(x => x.IsDeleted == false);
-            if (!string.IsNullOrEmpty(filter))
-                query = query.Where(x => x.Name.Contains(filter) || x.IsDeleted == false);
-
-            totalRow = query.Count();
-            return query.OrderBy(x => x.Name).Skip(page * pageSize).Take(pageSize);
-        }
-
-        public ApplicationGroup GetDetail(int id)
-        {
-            return _appGroupRepository.GetSingleById(id);
-        }
-
         public IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId)
         {
             return _appGroupRepository.GetListGroupByUserId(userId);
@@ -94,25 +108,6 @@ namespace TNS.Service
         public IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId)
         {
             return _appGroupRepository.GetListUserByGroupId(groupId);
-        }
-
-        public void IsDeleted(int id)
-        {
-            var group = _appGroupRepository.GetSingleById(id);
-            group.IsDeleted = true;
-            SaveChanges();
-        }
-
-        public void SaveChanges()
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void Update(ApplicationGroup appGroup)
-        {
-            if (_appGroupRepository.CheckContains(x => x.Name == appGroup.Name && x.ID != appGroup.ID))
-                throw new NameDuplicatedException("Tên không được trùng");
-            _appGroupRepository.Update(appGroup);
         }
     }
 }

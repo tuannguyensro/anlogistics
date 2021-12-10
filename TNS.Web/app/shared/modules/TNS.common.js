@@ -1,4 +1,9 @@
 ﻿(function () {
     angular.module('TNS.common',
-        ['ui.router',]);
+        ['ui.router',
+            'checklist-model',
+            'ngBootbox',
+            'LocalStorageModule',
+            'angular-loading-bar'
+        ]);
 })();

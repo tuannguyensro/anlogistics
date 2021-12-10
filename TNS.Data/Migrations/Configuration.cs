@@ -24,12 +24,12 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            CreateUser(context);
+            CreateUser2(context);
             //BrandDefault(context);
             //CreateContactDetail(context);
             //CreateSystemConfig(context);
             //CreatePage(context);
-            //CreateGroup(context);
+            CreateGroup(context);
         }
         #region Methods
         private void CreateUser(TNSExampleDbContext context)
@@ -55,7 +55,7 @@
                     IsDeleted = false,
                     IsViewed = true
                 };
-                if (manager.Users.Count() == 0)
+                if (manager.Users.Count(x => x.UserName == "admin") == 0)
                 {
                     manager.Create(user, "123123$");
 
@@ -73,6 +73,38 @@
             }
         }
 
+        private void CreateUser2(TNSExampleDbContext context)
+        {
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new TNSExampleDbContext()));
+
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new TNSExampleDbContext()));
+
+                var user = new ApplicationUser()
+                {
+                    UserName = "test1",
+                    Email = "bitcoincuatoi@gmail.com",
+                    EmailConfirmed = true,
+                    Image = CommonConstants.DefaultAvatar,
+                    CreatedDate = DateTime.Now,
+                    BirthDay = DateTime.ParseExact("11/11/1995", "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    Gender = "Nam",
+                    FullName = "test1",
+                    Address = "Tây Ninh",
+                    PhoneNumber = "0858585874",
+                    IsDeleted = false,
+                    IsViewed = true
+                };
+                if (manager.Users.Count(x => x.UserName == "test1") == 0)
+                {
+                    manager.Create(user, "123321!");
+
+
+                    var adminUser = manager.FindByEmail("bitcoincuatoi@gmail.com");
+
+                    manager.AddToRoles(adminUser.Id, new string[] { "User"});
+
+                }
+        }
 
 
         /*private void CreateContactDetail(uStoraDbContext context)

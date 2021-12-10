@@ -93,6 +93,18 @@
     <Compile Include="Migrations\202112011438380_Intergrate-AspnetIdentity.designer.cs">
       <DependentUpon>202112011438380_Intergrate-AspnetIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112080357165_UpdateTable.cs" />
+    <Compile Include="Migrations\202112080357165_UpdateTable.designer.cs">
+      <DependentUpon>202112080357165_UpdateTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112080408420_updatetable1.cs" />
+    <Compile Include="Migrations\202112080408420_updatetable1.designer.cs">
+      <DependentUpon>202112080408420_updatetable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112080533571_updatetable2.cs" />
+    <Compile Include="Migrations\202112080533571_updatetable2.designer.cs">
+      <DependentUpon>202112080533571_updatetable2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -125,6 +137,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112011438380_Intergrate-AspnetIdentity.resx">
       <DependentUpon>202112011438380_Intergrate-AspnetIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112080357165_UpdateTable.resx">
+      <DependentUpon>202112080357165_UpdateTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112080408420_updatetable1.resx">
+      <DependentUpon>202112080408420_updatetable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112080533571_updatetable2.resx">
+      <DependentUpon>202112080533571_updatetable2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

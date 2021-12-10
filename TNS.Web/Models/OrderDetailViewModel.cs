@@ -14,10 +14,22 @@ namespace TNS.Web.Models
         [Required]
         public long ProductID { get; set; }
 
-        [Required]
-        public int Quantity { get; set; }
+        public string TrackingID { get; set; }
 
-        public virtual OrderViewModel Order { get; set; }
+        public string ProductLink { get; set; }
+
+        public string ProductImage { get; set; }
+
+        public string ProductDetail { get; set; }
+
+        public string Description { get; set; }
+
+        public int? Quantity { get; set; }
+
+        public decimal? CNPrice { get; set; }
+        public decimal? VNPrice { get; set; }
+
+        public decimal? ExchangeRate { get; set; }
 
     }
 }

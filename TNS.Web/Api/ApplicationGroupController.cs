@@ -36,7 +36,6 @@ namespace TNS.Web.Api
         }
         [Route("getlistpaging")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser, Admin")]
         public HttpResponseMessage GetListPaging(HttpRequestMessage request, int page, int pageSize, string filter = null)
         {
 
@@ -62,7 +61,6 @@ namespace TNS.Web.Api
         }
         [Route("getlistall")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser, Admin")]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
             return CreateHttpResponse(request, () =>
@@ -78,7 +76,6 @@ namespace TNS.Web.Api
         }
         [Route("detail/{id:int}")]
         [HttpGet]
-        [Authorize(Roles = "UpdateUser, Admin")]
         public HttpResponseMessage Details(HttpRequestMessage request, int id)
         {
             if (id == 0)
@@ -98,19 +95,16 @@ namespace TNS.Web.Api
 
         [HttpPost]
         [Route("add")]
-        [Authorize(Roles = "AddUser, Admin")]
         public HttpResponseMessage Create(HttpRequestMessage request, ApplicationGroupViewModel appGroupViewModel)
         {
             if (ModelState.IsValid)
             {
                 var newAppGroup = new ApplicationGroup();
                 newAppGroup.Name = appGroupViewModel.Name;
-                newAppGroup.IsDeleted = false;
                 try
                 {
-
                     var appGroup = _appGroupService.Add(newAppGroup);
-                    _appGroupService.SaveChanges();
+                    _appGroupService.Save();
 
                     //save group
                     var listRoleGroup = new List<ApplicationRoleGroup>();
@@ -144,7 +138,6 @@ namespace TNS.Web.Api
 
         [HttpPut]
         [Route("update")]
-        [Authorize(Roles = "UpdateUser, Admin")]
         public async Task<HttpResponseMessage> Update(HttpRequestMessage request, ApplicationGroupViewModel appGroupViewModel)
         {
             if (ModelState.IsValid)
@@ -154,6 +147,7 @@ namespace TNS.Web.Api
                 {
                     appGroup.UpdateApplicationGroup(appGroupViewModel);
                     _appGroupService.Update(appGroup);
+                    //_appGroupService.Save();
 
                     //save group
                     var listRoleGroup = new List<ApplicationRoleGroup>();
@@ -196,16 +190,15 @@ namespace TNS.Web.Api
 
         [HttpDelete]
         [Route("delete")]
-        [Authorize(Roles = "DeleteUser, Admin")]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
-            _appGroupService.IsDeleted(id);
-            return request.CreateResponse(HttpStatusCode.OK);
+            var appGroup = _appGroupService.Delete(id);
+            _appGroupService.Save();
+            return request.CreateResponse(HttpStatusCode.OK, appGroup);
         }
 
         [Route("deletemulti")]
         [HttpDelete]
-        [Authorize(Roles = "DeleteUser, Admin")]
         public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedList)
         {
             return CreateHttpResponse(request, () =>
@@ -223,7 +216,7 @@ namespace TNS.Web.Api
                         _appGroupService.Delete(item);
                     }
 
-                    _appGroupService.SaveChanges();
+                    _appGroupService.Save();
 
                     response = request.CreateResponse(HttpStatusCode.OK, listItem.Count);
                 }

@@ -21,6 +21,18 @@
     {
       "library": "toastr.js@2.1.4",
       "destination": "Assets/libs/toastr.js/"
+    },
+    {
+      "library": "bootbox.js@5.5.2",
+      "destination": "Assets/libs/bootbox.js/"
+    },
+    {
+      "library": "checklist-model@1.0.0",
+      "destination": "Assets/libs/checklist-model/"
+    },
+    {
+      "library": "mustache.js@4.2.0",
+      "destination": "Assets/libs/mustache.js/"
     }
   ]
 }

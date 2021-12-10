@@ -2,7 +2,7 @@
     app.controller('homeController', homeController);
     homeController.$inject = ['$scope', 'apiService', 'notificationService', '$sce'];
     function homeController($scope, apiService, notificationService, $sce) {
-        $scope.getItemCount = getItemCount;
+ /*       $scope.getItemCount = getItemCount;
         $scope.productsCount = 0;
         $scope.feedbacksCount = 0;
         $scope.ordersCount = 0;
@@ -38,6 +38,6 @@
         }
         latestUsers();
         getItemCount();
-        latestProducts();
+        latestProducts();*/
     }
 })(angular.module('TNS'));

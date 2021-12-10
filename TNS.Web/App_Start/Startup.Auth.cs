@@ -26,9 +26,8 @@ namespace TNS.Web.App_Start
             {
                 // Configure the db context, user manager and signin manager to use a single instance per request
                 app.CreatePerOwinContext(TNSExampleDbContext.Create);
-
-                app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-                app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+/*                app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+                app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);*/
                 app.CreatePerOwinContext<UserManager<ApplicationUser>>(CreateManager);
 
                 app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
@@ -40,6 +39,7 @@ namespace TNS.Web.App_Start
 
                 });
                 app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
 
                 // Configure the sign in cookie
                 app.UseCookieAuthentication(new CookieAuthenticationOptions

@@ -1,0 +1,181 @@
+﻿   <!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách đơn hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Tìm kiếm đơn hàng</h3>
+
+                <div class="card-tools">
+                    <button type="button"
+                            class="btn btn-tool"
+                            data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button"
+                            class="btn btn-tool"
+                            data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span>Trạng thái:</span>
+                        <a href="#">Khởi tạo (0)</a>
+                        <a href="#">Kho TQ nhận (0)</a>
+                        <a href="#">Xuất kho TQ (0)</a>
+                        <a href="#">Nhập kho VN (0)</a>
+                        <a href="#">Đang giao hàng (0)</a>
+                        <a href="#">Đã giao hàng (0)</a>
+                        <a href="#">Đã hủy (0)</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Nhập mã đơn hàng</label>
+                            <input class="form-control" type="text" f>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Nhập mã vận đơn</label>
+                            <input class="form-control" type="text" f>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3">
+                        <!-- Date -->
+                        <div class="form-group">
+                            <label>Thời gian từ:</label>
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>đến:</label>
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary float-right">Tìm kiếm</button>
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <button class="btn btn-primary" ui-sref="add_order">Thêm mới</button>
+                <button class="btn btn-danger" id="btnDelete" disabled ng-click="deleteOrderMulti()">Xóa dòng đã chọn</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách đơn đặt hàng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2"
+                               class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">
+                                        <label>
+                                            <input type="checkbox" name="checkAll" ng-click="selectAll()" />
+                                        </label>
+                                    </th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Thời gian</th>
+                                    <th>Link sản phẩm</th>
+                                    <th>Tổng giá trị</th>
+                                    <th>Số tiền cọc</th>
+                                    <th>Số lượng</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in orders">
+                                    <td>
+                                        <input type="checkbox" name="checkSingle" ng-model="item.checked" />
+                                    </td>
+                                    <td><a href="#">{{item.ID}}</a></td>
+                                    <td>{{item.CustomerName}}</td>
+                                    <td>{{item.ProductLink}}</td>
+                                    <td>{{item.CustomerEmail}}</td>
+                                    <td>
+                                        <span ng-class="{'badge bg-red':item.PaymentStatus==0,'badge bg-green':item.PaymentStatus==2,'badge bg-blue':item.PaymentStatus==1}">
+                                            {{item.PaymentStatus|statusOrderFilter}}
+                                        </span>
+                                    </td>
+                                    <td>{{item.Quantity}}</td>
+                                    <td>
+                                        <span ng-class="{'badge bg-red':item.Status==false,'badge bg-green':item.Status==true}">
+                                            {{item.Status|statusFilter}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Thời gian</th>
+                                    <th>Link sản phẩm</th>
+                                    <th>Tổng giá trị</th>
+                                    <th>Số tiền cọc</th>
+                                    <th>Số lượng</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

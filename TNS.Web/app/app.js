@@ -1,6 +1,10 @@
 ﻿(function () {
     angular.module('TNS',
-        [   'LocalStorageModule',
+        ['LocalStorageModule',
+            'TNS.application_groups',
+            'TNS.application_roles',
+            'TNS.application_users',
+            'TNS.orders',
             'TNS.common'])
         .config(['localStorageServiceProvider', function (localStorageServiceProvider) {
             localStorageServiceProvider.setPrefix('ls');

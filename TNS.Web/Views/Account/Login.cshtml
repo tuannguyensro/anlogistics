@@ -1,6 +1,6 @@
 ﻿@model TNS.Web.Models.LoginViewModel
 @{
-    ViewBag.Title = "Login";
+    Layout = null;
 }
 <!doctype html>
 <html class="no-js" lang="">
@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Xmee | Login and Register Form Html Templates</title>
+    <title>AN LOGISTICS | Đăng nhập hệ thống</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -38,47 +38,46 @@
                         <div class="fxt-header">
                             <a href="login-20.html" class="fxt-logo"><img src="Assets/LoginClient/img/logo-20.png" alt="Logo"></a>
                             @*                            <ul class="fxt-socials">
-                                    <li class="fxt-google"><a href="#" title="google"><i class="fab fa-google-plus-g"></i><span>Google +</span></a></li>
-                                    <li class="fxt-twitter"><a href="#" title="twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a></li>
-                                    <li class="fxt-facebook"><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a></li>
-                                </ul>
-                                <div class="fxt-style-line">
-                                    <h2>Or Login With Email</h2>
-                                </div>*@
+                <li class="fxt-google"><a href="#" title="google"><i class="fab fa-google-plus-g"></i><span>Google +</span></a></li>
+                <li class="fxt-twitter"><a href="#" title="twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a></li>
+                <li class="fxt-facebook"><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a></li>
+            </ul>
+            <div class="fxt-style-line">
+                <h2>Or Login With Email</h2>
+            </div>*@
                         </div>
-
-                        <div class="fxt-form">
-                            @using (Html.BeginForm("Login", "Account", new { returnUrl = @ViewBag.ReturnUrl }, FormMethod.Post))
-                            {
-                                @Html.ValidationSummary(false, "", new { @class = "error" })
-                                <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-1">
-                                        @Html.TextBoxFor(model => model.Username, new { @placeholder = "Tài khoản", @name = "username", @required = "required", @class = "form-control" })
-                                    </div>
+                        @using (Html.BeginForm("Login", "Account", new { returnUrl = @ViewBag.ReturnUrl }, FormMethod.Post,
+                                                        new { @class = "fxt-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(false, "", new { @class = "error" })
+                            <div class="form-group">
+                                <div class="fxt-transformY-50 fxt-transition-delay-1">
+                                    @Html.TextBoxFor(model => model.Username, new { @placeholder = "Tài khoản", @name = "username", @required = "required", @class = "form-control" })
                                 </div>
-                                <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-2">
-                                        @Html.PasswordFor(model => model.Password, new { @placeholder = "Mật khẩu", @name = "password", @required = "required", @class = "form-control" })
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="fxt-transformY-50 fxt-transition-delay-2">
+                                    @Html.PasswordFor(model => model.Password, new { @placeholder = "Mật khẩu", @name = "password", @required = "required", @class = "form-control" })
                                 </div>
-                                <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-3">
-                                        <div class="fxt-checkbox-area">
-                                            <div class="checkbox">
-                                                @Html.CheckBoxFor(model => model.RememberMe)
-                                                <label for="checkbox1">Lưu thông tin đăng nhập</label>
-                                            </div>
-                                            <a href="forgot-password-20.html" class="switcher-text">Quên mật khẩu?</a>
+                            </div>
+                            <div class="form-group">
+                                <div class="fxt-transformY-50 fxt-transition-delay-3">
+                                    <div class="fxt-checkbox-area">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(model => model.RememberMe)
+                                            <label for="checkbox1">Lưu thông tin đăng nhập</label>
                                         </div>
+                                        <a href="forgot-password-20.html" class="switcher-text">Quên mật khẩu?</a>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
-                                        <button type="submit" class="fxt-btn-fill">Log in</button>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="fxt-transformY-50 fxt-transition-delay-4">
+                                    <button type="submit" class="fxt-btn-fill">Log in</button>
                                 </div>
-                            }
-                        </div>
+                            </div>
+                        }
                         <div class="fxt-footer">
                             <div class="fxt-transformY-50 fxt-transition-delay-5">
                                 <p>Bạn chưa có tài khoản?<a href="dang-ky.html" class="switcher-text2 inline-text">Đăng ký</a></p>

@@ -18,6 +18,7 @@ namespace TNS.Model.Models
         [MaxLength(256)]
         public string TrackingID { get; set; }
 
+        [Required]
         [MaxLength(256)]
         public string ProductLink { get; set; }
 
@@ -27,17 +28,18 @@ namespace TNS.Model.Models
         [MaxLength(256)]
         public string ProductDetail { get; set; }
 
-        public int Quantity { get; set; }
-
-        public decimal CNPrice { get; set; }
-        public decimal VNPrice { get; set; }
-
-        public decimal ExchangeRate { get; set; }
-
         [MaxLength(750)]
         public string Description { get; set; }
-        [Required]
 
+
+        public int? Quantity { get; set; }
+
+        public decimal? CNPrice { get; set; }
+        public decimal? VNPrice { get; set; }
+
+        public decimal? ExchangeRate { get; set; }
+
+        [Required]
         [ForeignKey("OrderID")]
         public virtual Order Order { get; set; }
 

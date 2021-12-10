@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Demo | Dashboard</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Assets/Admin/plugins/fontawesome-free/css/all.min.css" />
+    <link href="~/Assets/libs/loading-bar.css" rel="stylesheet" />
+    <link href="~/Assets/libs/toastr.js/toastr.css" rel="stylesheet" />
+    <!-- Ionicons -->
+    <link rel="stylesheet"
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="~/Assets/Admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+    <!-- iCheck -->
+    <link rel="stylesheet"
+          href="~/Assets/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <!-- JQVMap -->
+    @*<link rel="stylesheet" href="~/Assets/Admin/plugins/jqvmap/jqvmap.min.css" />*@
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Assets/Admin/dist/css/adminlte.min.css" />
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet"
+          href="~/Assets/Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Assets/Admin/plugins/daterangepicker/daterangepicker.css" />
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/Assets/Admin/plugins/summernote/summernote-bs4.min.css" />
+
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="~/Assets/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet"
+          href="~/Assets/Admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
+    <link rel="stylesheet"
+          href="~/Assets/Admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" ng-app="TNS" ng-controller="userrootController">
+
+    <ui-view></ui-view>
+
+    <!-- jQuery -->
+    <script src="~/Assets/Admin/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/Assets/Admin/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge("uibutton", $.ui.button);
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Assets/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/Assets/Admin/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/Assets/Admin/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    @*    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+        <script src="~/Assets/Admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>*@
+    <!-- jQuery Knob Chart -->
+    <script src="~/Assets/Admin/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/Assets/Admin/plugins/moment/moment.min.js"></script>
+    <script src="~/Assets/Admin/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/Assets/Admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/Assets/Admin/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/Assets/Admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Assets/Admin/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    @*<script src="~/Assets/Admin/dist/js/demo.js"></script>*@
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/Assets/Admin/dist/js/pages/dashboard.js"></script>
+
+    <!-- DataTables  & Plugins -->
+    <script src="~/Assets/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Assets/Admin/plugins/jszip/jszip.min.js"></script>
+    <script src="~/Assets/Admin/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/Assets/Admin/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            $("#example1")
+                .DataTable({
+                    responsive: true,
+                    lengthChange: false,
+                    autoWidth: false,
+                    buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                })
+                .buttons()
+                .container()
+                .appendTo("#example1_wrapper .col-md-6:eq(0)");
+            $("#example2").DataTable({
+                paging: true,
+                lengthChange: false,
+                searching: false,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                responsive: true,
+            });
+        });
+    </script>
+
+    <!--Begin embed AngularJS-->
+    <script src="~/Assets/libs/angular.js/angular.js"></script>
+    <script src="~/Assets/libs/angular-ui-router/angular-ui-router.js"></script>
+    <script src="~/Assets/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/Assets/libs/angular-local-storage/angular-local-storage.js"></script>
+    <script src="~/Assets/libs/loading-bar.js"></script>
+
+    <!--Begin embed components AngularJS-->
+    <script src="~/app/shared/modules/TNS.common.js"></script>
+    <script src="~/app/shared/services/apiService.js"></script>
+    <script src="~/app/shared/services/notificationService.js"></script>
+    <script src="~/app/shared/services/authData.js"></script>
+    <script src="~/app/shared/services/authenticationService.js"></script>
+    <script src="~/app/shared/services/loginService.js"></script>
+    <script src="~/app/shared/services/commonService.js"></script>
+
+    <script src="~/app/appuser.js"></script>
+    <script src="~/app/usercomponents/userhome/userrootController.js"></script>
+
+    <script src="~/app/usercomponents/userhome/userhomeController.js"></script>
+    <script src="~/app/components/login/loginController.js"></script>
+</body>
+</html>

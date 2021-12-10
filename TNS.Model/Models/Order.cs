@@ -53,12 +53,10 @@ namespace TNS.Model.Models
 
         [MaxLength(128)]
         public string CustomerId { get; set; }
-/*
+
         [ForeignKey("CustomerId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }*/
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual IEnumerable<OrderDetail> OrderDetails { get; set; }
-
-        public virtual IEnumerable<TrackOrder> TrackOrders { get; set; }
     }
 }

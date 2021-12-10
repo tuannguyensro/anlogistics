@@ -182,7 +182,7 @@ namespace TNS.Web.Controllers
                 {
                     var newUser = await _userManager.FindByEmailAsync(registerVm.Email);
                     if (newUser != null)
-                        await _userManager.AddToRolesAsync(newUser.Id, new string[] { "ViewUser" });
+                        await _userManager.AddToRolesAsync(newUser.Id, new string[] {"User"});
 
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -242,7 +242,7 @@ namespace TNS.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("UserIndex", "Home");
                     }
                 }
                 else
@@ -344,6 +344,10 @@ namespace TNS.Web.Controllers
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+        public ActionResult Users()
         {
             return View();
         }

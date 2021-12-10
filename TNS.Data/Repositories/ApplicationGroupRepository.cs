@@ -11,14 +11,13 @@ namespace TNS.Data.Repositories
     public interface IApplicationGroupRepository : IRepository<ApplicationGroup>
     {
         IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId);
-
         IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId);
     }
-
     public class ApplicationGroupRepository : RepositoryBase<ApplicationGroup>, IApplicationGroupRepository
     {
         public ApplicationGroupRepository(IDbFactory dbFactory) : base(dbFactory)
         {
+
         }
 
         public IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId)

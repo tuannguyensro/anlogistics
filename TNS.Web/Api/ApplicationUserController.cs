@@ -20,47 +20,31 @@ namespace TNS.Web.Api
     [RoutePrefix("api/applicationUser")]
     public class ApplicationUserController : ApiControllerBase
     {
-        private ICommonService _commonService;
-        private IApplicationUserService _userService;
-        private IApplicationUserService _appUser;
         private ApplicationUserManager _userManager;
         private IApplicationGroupService _appGroupService;
         private IApplicationRoleService _appRoleService;
-
         public ApplicationUserController(
             IApplicationGroupService appGroupService,
-            IApplicationUserService appUser,
             IApplicationRoleService appRoleService,
             ApplicationUserManager userManager,
-            IErrorService errorService,
-            ICommonService commonService,
-            IApplicationUserService userService)
+            IErrorService errorService)
             : base(errorService)
         {
-            _userService = userService;
             _appRoleService = appRoleService;
-            _appUser = appUser;
             _appGroupService = appGroupService;
             _userManager = userManager;
-            _commonService = commonService;
         }
-
-        #region Methods
         [Route("getlistpaging")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser, Admin")]
+        //[Authorize(Roles ="ViewUser")]
         public HttpResponseMessage GetListPaging(HttpRequestMessage request, int page, int pageSize, string filter = null)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
                 int totalRow = 0;
-
-                var model = _commonService.GetUsers(filter);
-
-                totalRow = model.Count();
-                var query = model.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
-                IEnumerable<ApplicationUserViewModel> modelVm = Mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserViewModel>>(query);
+                var model = _userManager.Users;
+                IEnumerable<ApplicationUserViewModel> modelVm = Mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserViewModel>>(model);
 
                 PaginationSet<ApplicationUserViewModel> pagedSet = new PaginationSet<ApplicationUserViewModel>()
                 {
@@ -76,36 +60,17 @@ namespace TNS.Web.Api
             });
         }
 
-
-        [Route("getbyname")]
-        [HttpGet]
-        [AllowAnonymous]
-        public HttpResponseMessage GetUserByUsername(HttpRequestMessage request, string username)
-        {
-            var user = _userManager.FindByNameAsync(username);
-            if (user == null)
-            {
-                return request.CreateErrorResponse(HttpStatusCode.NoContent, "Không tìm thấy theo yêu cầu.");
-            }
-            else
-            {
-                var applicationUserViewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user.Result);
-                return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
-            }
-        }
-
-
         [Route("detail/{id}")]
         [HttpGet]
-        [Authorize(Roles = "UpdateUser, Admin")]
+        //[Authorize(Roles = "ViewUser")]
         public HttpResponseMessage Details(HttpRequestMessage request, string id)
         {
             if (string.IsNullOrEmpty(id))
             {
+
                 return request.CreateErrorResponse(HttpStatusCode.BadRequest, nameof(id) + " không có giá trị.");
             }
             var user = _userManager.FindByIdAsync(id);
-            _appUser.SetViewed(id);
             if (user == null)
             {
                 return request.CreateErrorResponse(HttpStatusCode.NoContent, "Không có dữ liệu");
@@ -117,11 +82,12 @@ namespace TNS.Web.Api
                 applicationUserViewModel.Groups = Mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupViewModel>>(listGroup);
                 return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
             }
+
         }
 
         [HttpPost]
         [Route("add")]
-        [Authorize(Roles = "AddUser, Admin")]
+        //[Authorize(Roles = "AddUser")]
         public async Task<HttpResponseMessage> Create(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
             if (ModelState.IsValid)
@@ -151,9 +117,11 @@ namespace TNS.Web.Api
                             }
                         }
                         _appGroupService.AddUserToGroups(listAppUserGroup, newAppUser.Id);
-                        _appGroupService.SaveChanges();
+                        _appGroupService.Save();
+
 
                         return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
+
                     }
                     else
                         return request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Join(",", result.Errors));
@@ -175,29 +143,25 @@ namespace TNS.Web.Api
 
         [HttpPut]
         [Route("update")]
-        [Authorize(Roles = "UpdateUser, Admin")]
-        public async Task<HttpResponseMessage> Update(HttpRequestMessage request, ApplicationUserViewModel appUserViewModel)
+        //[Authorize(Roles = "UpdateUser")]
+        public async Task<HttpResponseMessage> Update(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
             if (ModelState.IsValid)
             {
-                var appUser = await _userManager.FindByIdAsync(appUserViewModel.Id);
+                var appUser = await _userManager.FindByIdAsync(applicationUserViewModel.Id);
                 try
                 {
-                    appUser.UpdateUser(appUserViewModel);
-                    if (appUserViewModel.EmailConfirmed.Value)
-                        appUser.EmailConfirmed = true;
-                    else
-                        appUser.EmailConfirmed = false;
+                    appUser.UpdateUser(applicationUserViewModel);
                     var result = await _userManager.UpdateAsync(appUser);
                     if (result.Succeeded)
                     {
                         var listAppUserGroup = new List<ApplicationUserGroup>();
-                        foreach (var group in appUserViewModel.Groups)
+                        foreach (var group in applicationUserViewModel.Groups)
                         {
                             listAppUserGroup.Add(new ApplicationUserGroup()
                             {
                                 GroupId = group.ID,
-                                UserId = appUserViewModel.Id
+                                UserId = applicationUserViewModel.Id
                             });
                             //add role to user
                             var listRole = _appRoleService.GetListRoleByGroupId(group.ID);
@@ -207,20 +171,17 @@ namespace TNS.Web.Api
                                 await _userManager.AddToRoleAsync(appUser.Id, role.Name);
                             }
                         }
-                        _appGroupService.AddUserToGroups(listAppUserGroup, appUserViewModel.Id);
-                        _appGroupService.SaveChanges();
-                        return request.CreateResponse(HttpStatusCode.OK, appUserViewModel);
+                        _appGroupService.AddUserToGroups(listAppUserGroup, applicationUserViewModel.Id);
+                        _appGroupService.Save();
+                        return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
+
                     }
                     else
                         return request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Join(",", result.Errors));
                 }
-                catch (NameDuplicatedException)
+                catch (NameDuplicatedException dex)
                 {
-                    return request.CreateErrorResponse(HttpStatusCode.Conflict, "Tên không được trùng");
-                }
-                catch (Exception dex)
-                {
-                    return request.CreateErrorResponse(HttpStatusCode.InternalServerError, dex.Message);
+                    return request.CreateErrorResponse(HttpStatusCode.BadRequest, dex.Message);
                 }
             }
             else
@@ -229,32 +190,18 @@ namespace TNS.Web.Api
             }
         }
 
-        [HttpGet]
-        [Route("listdriver")]
-        public HttpResponseMessage GetUsersByGroupId(HttpRequestMessage request, int groupId)
-        {
-            return CreateHttpResponse(request, () =>
-            {
-                HttpResponseMessage response = null;
-                List<ApplicationUserViewModel> listUsers = new List<ApplicationUserViewModel>(); ;
-                var listUserId = _appUser.GetUserIdByGroupId(groupId);
-                foreach (var userId in listUserId)
-                {
-                    listUsers.Add(Mapper.Map<ApplicationUser, ApplicationUserViewModel>(_appUser.GetUserById(userId)));
-                }
-                response = request.CreateResponse(HttpStatusCode.OK, listUsers);
-                return response;
-            });
-        }
-
         [HttpDelete]
         [Route("delete")]
-        [Authorize(Roles = "DeleteUser, Admin")]
-        public HttpResponseMessage Delete(HttpRequestMessage request, string id)
+        //[Authorize(Roles ="DeleteUser")]
+        public async Task<HttpResponseMessage> Delete(HttpRequestMessage request, string id)
         {
-            _userService.IsDeleted(id);
-            return request.CreateResponse(HttpStatusCode.OK);
+            var appUser = await _userManager.FindByIdAsync(id);
+            var result = await _userManager.DeleteAsync(appUser);
+            if (result.Succeeded)
+                return request.CreateResponse(HttpStatusCode.OK, id);
+            else
+                return request.CreateErrorResponse(HttpStatusCode.OK, string.Join(",", result.Errors));
         }
-        #endregion
+
     }
 }

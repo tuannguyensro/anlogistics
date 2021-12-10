@@ -22,67 +22,26 @@ namespace TNS.Web
                defaults: new { controller = "Admin", action = "Index", tagId = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
-            //products by tag
-            routes.MapRoute(
-               name: "Products by tag",
-               url: "products/tags-{tagId}.html",
-               defaults: new { controller = "Product", action = "ProductsByTag", tagId = UrlParameter.Optional },
-               namespaces: new string[] { "TNS.Web.Controllers" }
-           );
 
+            //user
             routes.MapRoute(
-                name: "Product category",
-                url: "category/{alias}-{id}.html",
-                defaults: new { controller = "Product", action = "Category", id = UrlParameter.Optional },
-                namespaces: new string[] { "TNS.Web.Controllers" }
-            );
-            //Detail
-            routes.MapRoute(
-                name: "Product Detail",
-                url: "product/{alias}-{id}.html",
-                defaults: new { controller = "Product", action = "Detail", id = UrlParameter.Optional },
-                namespaces: new string[] { "TNS.Web.Controllers" }
-            );
-            //search
-            routes.MapRoute(
-               name: "Search",
-               url: "search.html",
-               defaults: new { controller = "Product", action = "Search", id = UrlParameter.Optional },
-               namespaces: new string[] { "TNS.Web.Controllers" }
-           );
-            //shop
-            routes.MapRoute(
-               name: "Shop",
-               url: "shop.html",
-               defaults: new { controller = "Product", action = "Shop", id = UrlParameter.Optional },
-               namespaces: new string[] { "TNS.Web.Controllers" }
-           );
-            //page
-            routes.MapRoute(
-               name: "Page",
-               url: "trang-{alias}.html",
-               defaults: new { controller = "Page", action = "Index", alias = UrlParameter.Optional },
-               namespaces: new string[] { "TNS.Web.Controllers" }
-           );
-            //wishlist
-            routes.MapRoute(
-               name: "wishlist",
-               url: "san-pham-yeu-thich.html",
-               defaults: new { controller = "Wishlist", action = "Index", alias = UrlParameter.Optional },
-               namespaces: new string[] { "TNS.Web.Controllers" }
-           );
-            //User Index
-            routes.MapRoute(
-               name: "User Admin",
-               url: "quan-ly-he-thong.html",
-               defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional },
+               name: "User Index",
+               url: "Dashboard",
+               defaults: new { controller = "Home", action = "UserIndex", tagId = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             //shopping cart 
             routes.MapRoute(
                name: "Shopping cart",
-               url: "tao-don-hang.html",
+               url: "orders/add-order",
                defaults: new { controller = "ShoppingCart", action = "Index", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //listorder shopping cart 
+            routes.MapRoute(
+               name: "ListOrder Shopping cart",
+               url: "orders",
+               defaults: new { controller = "ShoppingCart", action = "ListOrder", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             //No order cart 

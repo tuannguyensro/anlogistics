@@ -51,6 +51,6 @@ namespace TNS.Model.Models
         }
 
         public virtual IEnumerable<Order> Orders { get; set; }
-        public virtual IEnumerable<TrackOrder> TrackOrders { get; set; }
+
     }
 }

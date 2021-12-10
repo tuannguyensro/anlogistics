@@ -29,7 +29,6 @@ namespace TNS.Web.Api
 
         [Route("getlistpaging")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser, Admin")]
         public HttpResponseMessage GetListPaging(HttpRequestMessage request, int page, int pageSize, string filter = null)
         {
             return CreateHttpResponse(request, () =>
@@ -52,10 +51,8 @@ namespace TNS.Web.Api
                 return response;
             });
         }
-
         [Route("getlistall")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser, Admin")]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
             return CreateHttpResponse(request, () =>
@@ -69,10 +66,8 @@ namespace TNS.Web.Api
                 return response;
             });
         }
-
         [Route("detail/{id}")]
         [HttpGet]
-        [Authorize(Roles = "UpdateUser, Admin")]
         public HttpResponseMessage Details(HttpRequestMessage request, string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -89,7 +84,6 @@ namespace TNS.Web.Api
 
         [HttpPost]
         [Route("add")]
-        [Authorize(Roles = "AddUser, Admin")]
         public HttpResponseMessage Create(HttpRequestMessage request, ApplicationRoleViewModel applicationRoleViewModel)
         {
             if (ModelState.IsValid)
@@ -115,7 +109,6 @@ namespace TNS.Web.Api
 
         [HttpPut]
         [Route("update")]
-        [Authorize(Roles = "UpdateUser, Admin")]
         public HttpResponseMessage Update(HttpRequestMessage request, ApplicationRoleViewModel applicationRoleViewModel)
         {
             if (ModelState.IsValid)
@@ -141,16 +134,15 @@ namespace TNS.Web.Api
 
         [HttpDelete]
         [Route("delete")]
-        [Authorize(Roles = "DeleteUser, Admin")]
         public HttpResponseMessage Delete(HttpRequestMessage request, string id)
         {
-            _appRoleService.IsDeleted(id);
+            _appRoleService.Delete(id);
+            _appRoleService.Save();
             return request.CreateResponse(HttpStatusCode.OK, id);
         }
 
         [Route("deletemulti")]
         [HttpDelete]
-        [Authorize(Roles = "DeleteUser, Admin")]
         public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedList)
         {
             return CreateHttpResponse(request, () =>
