@@ -11,9 +11,6 @@ namespace TNS.Web.Models
         [Required]
         public int OrderID { get; set; }
 
-        [Required]
-        public long ProductID { get; set; }
-
         public string TrackingID { get; set; }
 
         public string ProductLink { get; set; }

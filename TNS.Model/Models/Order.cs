@@ -12,6 +12,10 @@ namespace TNS.Model.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        [Column(TypeName = "varchar")]
+        [MaxLength(128)]
+        public string OrderCode { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string CustomerName { get; set; }
@@ -27,7 +31,6 @@ namespace TNS.Model.Models
         [MaxLength(50)]
         public string CustomerMobile { get; set; }
 
-        [Required]
         public string CustomerMessage { get; set; }
 
         public int? WeightOrder { get; set; }

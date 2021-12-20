@@ -67,10 +67,7 @@
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../../index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="../../index3.html" class="nav-link">Tỉ giá: ¥1 = 3850</a>
                 </li>
             </ul>
             @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id = "frmLogout", @class = "navbar-nav ml-auto" }))
@@ -359,6 +356,6 @@
     <script src="~/Assets/Admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="~/Assets/Client/js/controller/common.js"></script>
     <!-- Page specific script -->
-
+    @RenderSection("footerJS",required: false)
 </body>
 </html>

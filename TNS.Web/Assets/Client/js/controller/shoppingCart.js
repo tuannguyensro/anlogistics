@@ -13,55 +13,10 @@
             }
 
         });
-        $('.txtQuantity').off('keyup').on('keyup', function (e) {
-            var quantity = parseInt($(this).val());
-            var productId = parseInt($(this).data('id'));
-            var price = parseFloat($(this).data('price'));
-            if (!isNaN(quantity)) {
-                var amount = quantity * price;
-                $('#amount_' + productId).text(numeral(amount).format('0,0') + ' đ');
-                $('span.product-count').text(cart.getTotalOrder().quantity);
-                $('#lblTotalOrder').text(numeral(cart.getTotalOrder().amount).format('0,0'));
-                $('#amount').text(numeral(cart.getTotalOrder().amount).format('0,0'));
-            }
-            else {
-                $('#amount_' + productId).text(0);
-                $('span.product-count').text(0);
-                $('#lblTotalOrder').text(0);
-                $('#amount').text(0);
-            }
-        });
-        $('#btnContinute').off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = "/shop.htm";
-        });
-        $('#btnUpdate').off('click').on('click', function (e) {
-            e.preventDefault();
-            var result = confirm("Bạn muốn cập nhật giỏ hàng?");
-            if (result)
-                cart.updateCart();
-        });
-        $('#btnCheckout').off('click').on('click', function (e) {
-            e.preventDefault();
 
-            $('#paymentMethodTow').removeClass('hide');
-            $('.bangthanhtoan').removeClass('hide');
-            $('html, body').animate({
-                scrollTop: $("#bangthanhtoan").offset().top
-            }, 1000);
-        });
-        $('select[name="paymentMethod"]').off('click').on('click', function () {
-            if ($(this).val() === 'NL') {
-                $('.boxContent').hide();
-                $('#nganluongContent').show();
-            }
-            else if ($(this).val() === 'ATM_ONLINE') {
-                $('.boxContent').hide();
-                $('#bankContent').show();
-            }
-            else {
-                $('.boxContent').hide();
-            }
+        $('#btnCheckout').off('click').on('click', function (e) {
+            e.preventDefault();        
+            cart.createOrder();
         });
         $('#btnDeleteAll').off('click').on('click', function (e) {
             e.preventDefault();
@@ -72,98 +27,11 @@
         $('#btnLoadUserInfo').off('click').on('click', function () {
             if ($(this).prop('checked')) {
                 cart.getUserInfo();
-                $(this).hide();
-                $('#LoadUserInfo label').hide();
             }
             else {
                 cart.resetValue();
             }
 
-        });
-
-        $('#frmCheckout').bootstrapValidator({
-            // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                fullname: {
-                    validators: {
-                        stringLength: {
-                            min: 2,
-                            message: "Nhập nhiều hơn 2 ký tự",
-                        },
-                        notEmpty: {
-                            message: 'Vui lòng nhập họ tên'
-                        },
-                        stringLength: {
-                            max: 100,
-                            message: "Nhập không quá 100 ký tự",
-                        }
-                    }
-                },
-
-                email: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Vui lòng nhập địa chỉ Email'
-                        },
-                        emailAddress: {
-                            message: 'Địa chỉ Email không hợp lệ'
-                        },
-                        stringLength: {
-                            max: 100,
-                            message: "Nhập không quá 100 ký tự",
-                        }
-                    }
-                },
-                phone: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Vui lòng nhập số điện thoại'
-                        },
-                        stringLength: {
-                            min: 2,
-                            message: "Nhập nhiều hơn 2 ký tự",
-                        },
-                        stringLength: {
-                            max: 50,
-                            message: "Nhập không quá 50 ký tự",
-                        }
-                    }
-                },
-                address: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Vui lòng nhập địa chỉ'
-                        },
-                        stringLength: {
-                            min: 2,
-                            message: "Nhập nhiều hơn 2 ký tự",
-                        },
-                        stringLength: {
-                            max: 250,
-                            message: "Nhập không quá 250 ký tự",
-                        }
-                    }
-                },
-
-                comment: {
-                    validators: {
-                        stringLength: {
-                            min: 5,
-                            message: 'Vui lòng nhập nội dung nhiều hơn 5 ký tự'
-                        },
-                        notEmpty: {
-                            message: 'Vui lòng nhập nội dung tin nhắn'
-                        }
-                    }
-                }
-            }
-        }).off('success.form.bv').on('success.form.bv', function (e) {
-            cart.createOrder();
         });
     },
     resetValue: function () {
@@ -173,21 +41,9 @@
         $('#address').val('');
         $('#message').val('');
     },
-    getTotalOrder: function () {
-        var listTextbox = $('.txtQuantity');
-        var total = {
-            amount: 0,
-            quantity: 0
-        };
-        $.each(listTextbox, function (i, item) {
-            total.amount += parseInt($(item).val()) * parseFloat($(item).data('price'));
-            total.quantity += parseInt($(item).val());
-        });
-        return total;
-    },
     getUserInfo: function () {
         $.ajax({
-            url: '/ShoppingCart/GetUserInfo',
+            url: '/Order/GetUserInfo',
             type: 'POST',
             dataType: 'json',
             success: function (res) {
@@ -205,34 +61,50 @@
         })
     },
     createOrder: function () {
+        var orderArr = [];
+        orderArr.length = 0;
+
+        $($("#tblOrderDetail tbody tr").each(function () {
+            var orderItem = {
+                ProductLink: $(this).find('td:eq(0)').find('input[type="text"]').val(),
+                ProductImage: $(this).find('td:eq(1)').find('input[type="text"]').val(),
+                ProductDetail: $(this).find('td:eq(2)').find('input[type="text"]').val(),
+                Quantity: $(this).find('td:eq(3)').find('input[type="number"]').val(),
+                Description: $(this).find('td:eq(4)').find('input[type="text"]').val()
+            }
+            orderArr.push(orderItem);
+        }));
+
         var order = {
             CustomerName: $('#fullname').val(),
             CustomerEmail: $('#email').val(),
             CustomerAddress: $('#address').val(),
             CustomerMobile: $('#phone').val(),
-            PaymentMethod: $('select[name="paymentMethod"] option:selected').val(),
             CustomerMessage: $('#message').val(),
             PaymentStatus: 0,
-            Status: true
+            Status: true,
+            OrderDetails : orderArr
         }
         $.ajax({
-            url: '/ShoppingCart/CreateOrder',
+            url: '/Order/CreateOrder',
             type: 'POST',
             dataType: 'json',
             data: {
                 orderViewModel: JSON.stringify(order)
             },
-            success: function (res) {
-                if (res.status) {
-                    if (res.urlCheckout != undefined && res.urlCheckout != '') {
-                        window.location.href = res.urlCheckout;
-                    }
-                    else {
-                        $('.bangthanhtoan').addClass('hide');
-                        window.location.href = "/xem-trang-thai-mat-hang.htm";
-                        cart.deleteAll("");
-                    }
+            success: function (data) {
+                if (data.status) {
+                    alert('Thêm đơn hàng thành công');
+                    window.location.href = "/orders";
+                    cart.deleteAll("");
                 }
+                else
+                {
+                    alert('Có lỗi xảy ra. Vui lòng kiểm tra lại đơn hàng');
+                }
+            },
+            error: function (error) {
+                console.log(error);
             }
         })
     },
@@ -312,7 +184,7 @@
     },
     deleteAll: function (load) {
         $.ajax({
-            url: '/ShoppingCart/DeleteAll',
+            url: '/Order/DeleteAll',
             type: 'POST',
             dataType: 'json',
             success: function (res) {

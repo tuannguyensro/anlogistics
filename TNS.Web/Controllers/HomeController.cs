@@ -12,24 +12,34 @@ namespace TNS.Web.Controllers
         {
             return View();
         }
-
+        public ActionResult Introduce()
+        {
+            return View();
+        }
+        public ActionResult PriceTable()
+        {
+            return View();
+        }
+        public ActionResult Guide()
+        {
+            return View();
+        }
+        public ActionResult Policy()
+        {
+            return View();
+        }
+        public ActionResult Recruitment()
+        {
+            return View();
+        }
+        public ActionResult Contact()
+        {
+            return View();
+        }
         public ActionResult UserIndex()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

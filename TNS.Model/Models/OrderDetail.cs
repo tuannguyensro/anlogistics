@@ -7,13 +7,7 @@ namespace TNS.Model.Models
     public class OrderDetail
     {
         [Key]
-        [Column(Order = 1)]
         public int OrderID { get; set; }
-
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ProductID { get; set; }
 
         [MaxLength(256)]
         public string TrackingID { get; set; }

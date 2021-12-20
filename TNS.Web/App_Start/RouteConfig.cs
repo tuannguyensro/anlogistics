@@ -30,16 +30,16 @@ namespace TNS.Web
                defaults: new { controller = "Home", action = "UserIndex", tagId = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
-            //shopping cart 
+            //Add order Client 
             routes.MapRoute(
-               name: "Shopping cart",
+               name: "Add Order",
                url: "orders/add-order",
-               defaults: new { controller = "ShoppingCart", action = "Index", id = UrlParameter.Optional },
+               defaults: new { controller = "Order", action = "Index", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
-            //listorder shopping cart 
+            //listorder Client
             routes.MapRoute(
-               name: "ListOrder Shopping cart",
+               name: "ListOrder",
                url: "orders",
                defaults: new { controller = "ShoppingCart", action = "ListOrder", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
@@ -54,8 +54,8 @@ namespace TNS.Web
             //checkout completed 
             routes.MapRoute(
                name: "Checkout completed",
-               url: "xem-trang-thai-mat-hang.html",
-               defaults: new { controller = "ShoppingCart", action = "CheckOutSuccess", id = UrlParameter.Optional },
+               url: "trang-thai-don-hang",
+               defaults: new { controller = "Order", action = "CheckOutSuccess", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             routes.MapRoute(
@@ -147,18 +147,55 @@ namespace TNS.Web
                defaults: new { controller = "Account", action = "LogOut", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
+            //introduce
             routes.MapRoute(
-    name: "Default",
-    url: "{controller}/{action}/{id}",
-    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-);
-            //admin
-            // routes.MapRoute(
-            //    name: "admin",
-            //    url: "admin.htmll",
-            //    defaults: new { controller = "Admin", action = "Index", tagId = UrlParameter.Optional },
-            //    namespaces: new string[] { "TNS.Web.Controllers" }
-            //);
+               name: "Giới thiệu",
+               url: "gioi-thieu.html",
+               defaults: new { controller = "Home", action = "Introduce", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //bảng giá
+            routes.MapRoute(
+               name: "Bảng giá",
+               url: "bang-gia.html",
+               defaults: new { controller = "Home", action = "PriceTable", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //Hướng dẫn
+            routes.MapRoute(
+               name: "Hướng dẫn",
+               url: "huong-dan.html",
+               defaults: new { controller = "Home", action = "Guide", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //Chính sách
+            routes.MapRoute(
+               name: "Chính sách",
+               url: "chinh-sach.html",
+               defaults: new { controller = "Home", action = "Policy", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //Tuyển dụng
+            routes.MapRoute(
+               name: "Tuyển dụng",
+               url: "tuyen-dung.html",
+               defaults: new { controller = "Home", action = "Recruitment", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //Liên hệ
+            routes.MapRoute(
+               name: "Liên hệ",
+               url: "lien-he.html",
+               defaults: new { controller = "Home", action = "Contact", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new string[] { "TNS.Web.Controllers" }
+            );
+
         }
     }
 }

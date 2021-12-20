@@ -105,6 +105,22 @@
     <Compile Include="Migrations\202112080533571_updatetable2.designer.cs">
       <DependentUpon>202112080533571_updatetable2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112101433539_UpdateDB.cs" />
+    <Compile Include="Migrations\202112101433539_UpdateDB.designer.cs">
+      <DependentUpon>202112101433539_UpdateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112150908426_ChangeKeyProductIDOrderDetail.cs" />
+    <Compile Include="Migrations\202112150908426_ChangeKeyProductIDOrderDetail.designer.cs">
+      <DependentUpon>202112150908426_ChangeKeyProductIDOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112150934422_ChangeProductIDLongtoInt.cs" />
+    <Compile Include="Migrations\202112150934422_ChangeProductIDLongtoInt.designer.cs">
+      <DependentUpon>202112150934422_ChangeProductIDLongtoInt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112150945029_DropProductIDinOrderDetail.cs" />
+    <Compile Include="Migrations\202112150945029_DropProductIDinOrderDetail.designer.cs">
+      <DependentUpon>202112150945029_DropProductIDinOrderDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -146,6 +162,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112080533571_updatetable2.resx">
       <DependentUpon>202112080533571_updatetable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101433539_UpdateDB.resx">
+      <DependentUpon>202112101433539_UpdateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112150908426_ChangeKeyProductIDOrderDetail.resx">
+      <DependentUpon>202112150908426_ChangeKeyProductIDOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112150934422_ChangeProductIDLongtoInt.resx">
+      <DependentUpon>202112150934422_ChangeProductIDLongtoInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112150945029_DropProductIDinOrderDetail.resx">
+      <DependentUpon>202112150945029_DropProductIDinOrderDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

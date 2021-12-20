@@ -87,6 +87,7 @@ namespace TNS.Web.Api
                     newOrder.UpdateOrder(OrderVm);
                     newOrder.CreatedDate = DateTime.Now;
                     newOrder.CreatedBy = User.Identity.Name;
+                    //newOrder.CustomerMessage = "AL" + DateTime.Now.ToString("ddMMyyyy") + newOrder.ID;
                     _orderService.Add(newOrder);
                     _orderService.SaveChanges();
 
