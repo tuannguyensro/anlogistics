@@ -1,0 +1,193 @@
+﻿@model TNS.Web.Models.IndexViewModel
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var user = (TNS.Web.Models.ApplicationUserViewModel)ViewBag.User;
+}
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Thông tin tài khoản</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Thông tin tài khoản</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <!-- general form elements disabled -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin tài khoản</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            @if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
+                            {
+                                <div class="alert alert-success alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h5><i class="icon fas fa-check"></i> @ViewBag.StatusMessage</h5>
+                                </div>
+                            }
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label>Tài khoản</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Tài khoản" value="@user.UserName" disabled id="UserName" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Họ và tên</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Enter ..." value="@user.FullName" id="FullName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- radio -->
+                                        <div class="form-group">
+                                            <label>Giới tính</label>
+                                            <div class="row">
+                                                @if (user.Gender == "Nam")
+                                                {
+                                                    <div class="col-sm-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input"
+                                                                   type="radio"
+                                                                   name="radio1"
+                                                                   checked value="Nam" id="Gender" />
+                                                            <label class="form-check-label">Nam</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input"
+                                                                   type="radio"
+                                                                   name="radio1" value="Nữ" id="Gender" />
+                                                            <label class="form-check-label">Nữ</label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-sm-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input"
+                                                                   type="radio"
+                                                                   name="radio1" value="Nam" id="Gender" />
+                                                            <label class="form-check-label">Nam</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input"
+                                                                   type="radio"
+                                                                   name="radio1"
+                                                                   checked value="Nữ" id="Gender" />
+                                                            <label class="form-check-label">Nữ</label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <!-- Date -->
+                                        <div class="form-group">
+                                            <label>Ngày sinh</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="BirthDay" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" value="@user.BirthDay.ToString(string.Format("dd/MM/yyyy"))" data-mask/>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- textarea -->
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Enter ..." value="@user.Email" id="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Điện thoại</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Enter ..." value="@user.PhoneNumber" id="PhoneNumber" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- textarea -->
+                                        <div class="form-group">
+                                            <label>Địa chỉ</label>
+                                            <textarea class="form-control"
+                                                      rows="3"
+                                                      placeholder="Enter ..." id="Address">@user.Address</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <input type="button" onclick="window.location='/thay-doi-mat-khau.html'" value="Đổi mật khẩu" class="btn btn-danger" />
+                            <button type="submit" class="btn btn-success  float-right">
+                                <i class="fa fa-save"></i> Lưu
+                            </button>
+                        </div>
+                        <!-- /.card-footer -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@section footerJS{
+    <script>
+        $(function () {
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+            //Money Euro
+            $('[data-mask]').inputmask()
+        })
+    </script>
+}

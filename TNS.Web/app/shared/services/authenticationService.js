@@ -7,16 +7,17 @@
             this.setTokenInfo = function (data) {
                 tokenInfo = data;
                 localStorageService.set("TokenInfo", JSON.stringify(tokenInfo));
-            }
+            };
 
             this.getTokenInfo = function () {
                 return tokenInfo;
-            }
+            };
 
             this.removeToken = function () {
                 tokenInfo = null;
                 localStorageService.set("TokenInfo", null);
-            }
+                localStorageService.remove("TokenInfo");
+            };
 
             this.init = function () {
                 var tokenInfo = localStorageService.get("TokenInfo");
@@ -24,10 +25,12 @@
                     tokenInfo = JSON.parse(tokenInfo);
                     authData.authenticationData.IsAuthenticated = true;
                     authData.authenticationData.userName = tokenInfo.userName;
+                    authData.authenticationData.image = tokenInfo.image;
+                    authData.authenticationData.createdDate = tokenInfo.createdDate;
                     authData.authenticationData.accessToken = tokenInfo.accessToken;
 
                 }
-            }
+            };
 
             this.setHeader = function () {
                 delete $http.defaults.headers.common['X-Requested-With'];
@@ -35,18 +38,7 @@
                     $http.defaults.headers.common['Authorization'] = 'Bearer ' + authData.authenticationData.accessToken;
                     $http.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
                 }
-            }
-
-            this.validateRequest = function () {
-                var url = 'api/home/TestMethod';
-                var deferred = $q.defer();
-                $http.get(url).then(function () {
-                    deferred.resolve(null);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-                return deferred.promise;
-            }
+            };
 
             this.init();
         }

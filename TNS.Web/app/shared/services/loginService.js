@@ -12,19 +12,33 @@
                     headers:
                         { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).then(function (response) {
-                    userInfo = {
-                        accessToken: response.data.access_token,
-                        userName: userName
+                    var config = {
+                        params: {
+                            username: userName
+                        }
                     };
-                    authenticationService.setTokenInfo(userInfo);
-                    authData.authenticationData.IsAuthenticated = true;
-                    authData.authenticationData.userName = userName;
-                    authData.authenticationData.accessToken = userInfo.accessToken;
+                    apiService.get('/api/applicationuser/getbyname/', config, function (res) {
+                        userInfo = {
+                            accessToken: response.data.access_token,
+                            userName: res.data.UserName,
+                            image: res.data.Image,
+                            createdDate: res.data.CreatedDate
+                        };
+                        authenticationService.setTokenInfo(userInfo);
+                        authData.authenticationData.IsAuthenticated = true;
+                        authData.authenticationData.userName = userName;
+                        authData.authenticationData.accessToken = userInfo.accessToken;
+                        authData.authenticationData.image = userInfo.image;
+                        authData.authenticationData.createdDate = userInfo.createdDate;
+                        deferred.resolve(null);
+                    }, null);
 
-                    deferred.resolve(null);
                 }, function (err, status) {
                     authData.authenticationData.IsAuthenticated = false;
                     authData.authenticationData.userName = "";
+                    authData.authenticationData.image = "";
+                    authData.authenticationData.createdDate = "";
+                    authData.authenticationData.accessToken = "";
                     deferred.resolve(err);
                 })
                 return deferred.promise;
@@ -35,6 +49,8 @@
                     authenticationService.removeToken();
                     authData.authenticationData.IsAuthenticated = false;
                     authData.authenticationData.userName = "";
+                    authData.authenticationData.image = "";
+                    authData.authenticationData.createdDate = "";
                     authData.authenticationData.accessToken = "";
 
                 }, null);

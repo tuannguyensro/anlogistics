@@ -14,14 +14,16 @@ using TNS.Web.Models;
 
 namespace TNS.Web.Api
 {
-    [RoutePrefix("api/order")]
     [Authorize]
+    [RoutePrefix("api/order")]
     public class OrderController : ApiControllerBase
     {
         private IOrderService _orderService;
-        public OrderController(IOrderService orderService, IErrorService errorService) : base(errorService)
+        private IOrderDetailService _orderDetailService;
+        public OrderController(IOrderService orderService, IOrderDetailService orderDetailService, IErrorService errorService) : base(errorService)
         {
             _orderService = orderService;
+            _orderDetailService = orderDetailService;
         }
 
         [Route("getbyid/{id:int}")]
@@ -33,6 +35,8 @@ namespace TNS.Web.Api
             {
                 var model = _orderService.FindById(id);
 
+                //if (rm) model = _orderDetailService.FindWithRelationData(id, related: false);
+
                 var responseData = Mapper.Map<Order, OrderViewModel>(model);
 
                 var response = request.CreateResponse(HttpStatusCode.OK, responseData);
@@ -43,8 +47,8 @@ namespace TNS.Web.Api
 
         [Route("getall")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser")]
-        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize = 20)
+        //[Authorize(Roles = "ViewUser")]
+        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -63,7 +67,7 @@ namespace TNS.Web.Api
                     TotalCount = totalRow,
                     TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
                 };
-                var response = request.CreateResponse(HttpStatusCode.OK/* , paginationSet*/);
+                var response = request.CreateResponse(HttpStatusCode.OK , paginationSet);
                 return response;
             });
         }
@@ -179,6 +183,84 @@ namespace TNS.Web.Api
                     _orderService.SaveChanges();
 
                     response = request.CreateResponse(HttpStatusCode.OK, listOrders.Count);
+                }
+
+                return response;
+            });
+        }
+
+        //PHẦN CHI TIẾT ĐƠN HÀNG
+        //Lấy danh sách chi tiết đơn hàng.
+        [Route("getlistdetailbyid/{id:int}")]
+        [HttpGet]
+        [Authorize(Roles = "UpdateUser")]
+        public HttpResponseMessage GetListDetailById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var listDetail = _orderDetailService.ListOrderDetailByOrderID(id);
+
+                //if (rm) model = _orderDetailService.FindWithRelationData(id, related: false);
+
+                var responseData = Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(listDetail);
+
+                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+
+                return response;
+            });
+        }
+
+        [Route("updateorderdetail")]
+        [HttpGet]
+        [AllowAnonymous]
+        [Authorize(Roles = "UpdateUser")]
+        public HttpResponseMessage UpdateOrderDetail(HttpRequestMessage request, string listorderdetails)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var listOrderDetails = new JavaScriptSerializer().Deserialize<List<OrderDetailViewModel>>(listorderdetails);
+                    foreach (var item in listOrderDetails)
+                    {
+                        var listOD = _orderDetailService.FindById(item.ID);
+                        listOD.UpdateOrderDetail(item);
+                        _orderDetailService.Update(listOD);
+                        _orderDetailService.SaveChanges();
+                        var responseData = Mapper.Map<OrderDetail, OrderDetailViewModel>(listOD);
+                        response = request.CreateResponse(HttpStatusCode.OK, responseData);
+                    }
+                }
+                return response;
+            });
+        }
+
+        [Route("deletedetail")]
+        [HttpDelete]
+        [AllowAnonymous]
+        [Authorize(Roles = "DeleteUser")]
+        public HttpResponseMessage DeleteOrderDetail(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var oldOrderDetail = _orderDetailService.FindById(id);
+                    _orderDetailService.Delete(oldOrderDetail.ID);
+                    _orderDetailService.SaveChanges();
+
+                    var responseData = Mapper.Map<OrderDetail, OrderDetailViewModel>(oldOrderDetail);
+                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
                 }
 
                 return response;

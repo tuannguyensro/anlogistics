@@ -7,6 +7,11 @@ namespace TNS.Model.Models
     public class OrderDetail
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(Order = 0)]
+        public int ID { get; set; }
+
+        [Column(Order = 1)]
         public int OrderID { get; set; }
 
         [MaxLength(256)]
@@ -26,14 +31,10 @@ namespace TNS.Model.Models
         public string Description { get; set; }
 
 
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
 
-        public decimal? CNPrice { get; set; }
-        public decimal? VNPrice { get; set; }
+        public decimal CNPrice { get; set; }
 
-        public decimal? ExchangeRate { get; set; }
-
-        [Required]
         [ForeignKey("OrderID")]
         public virtual Order Order { get; set; }
 

@@ -1,0 +1,320 @@
+﻿    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Chi tiết đơn hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a ui-sref="home">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a ui-sref="orders">Danh sách đơn hàng</a></li>
+                    <li class="breadcrumb-item active">Chi tiết đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Main content -->
+                <div class="invoice p-3 mb-3">
+                    <!-- this row will not appear when printing -->
+                    <div class="row no-print" style="margin-bottom:5px;">
+                        <div class="col-12">
+                            <!--                            <a href="invoice-print.html"
+                                   rel="noopener"
+                                   target="_blank"
+                                   class="btn btn-default"><i class="fas fa-print"></i> Print</a>-->
+                            <button type="button" class="btn btn-warning float-right">
+                                <i class="fas fa-print"></i> In đơn hàng
+                            </button>
+                            <button type="button" class="btn btn-success float-right" style="margin-right: 5px" ng-click="getOrderPopup()"
+                                    data-toggle="modal" data-target="#UpdateOrder" data-backdrop="static" data-keyboard="false">
+                                <i class="fas fa-edit"></i> Cập nhật đơn hàng
+                            </button>
+                            <button type="button" class="btn btn-info float-right" style="margin-right: 5px" disabled>
+                                <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                            </button>
+                        </div>
+                    </div>
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                                <i class="fas fa-globe"></i> AN LOGISTICS
+                                <small class="float-right">Ngày đặt: {{order.CreatedDate | date:'dd/MM/yyyy HH:mm:ss'}}</small>
+                            </h4>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-8 invoice-col">
+                            <div class="row invoice-info">
+                                <div class="col-sm-12 invoice-col">
+                                    <h5><i class="fas fa-user"></i> Thông tin khách hàng</h5>
+                                    <address>
+                                        <strong>ID đơn hàng: {{order.OrderCode}}</strong><br />
+                                        <strong>Tài khoản:</strong> {{order.CreatedBy}}<br />
+                                        <strong>Họ và tên:</strong> {{order.CustomerName}}<br />
+                                        <strong>Điện thoại:</strong> {{order.CustomerMobile}}<br />
+                                        <strong>Địa chỉ:</strong> {{order.CustomerAddress}}<br />
+                                        <strong>Ghi chú:</strong><strong class="text-danger"> {{order.CustomerMessage}}</strong><br />
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <div class="row invoice-info">
+                                <div class="col-sm-12 invoice-col">
+                                    <h5>
+                                        <i class="fas fa-history"></i> Tình trạng đơn hàng:
+                                    </h5>
+                                    <address>
+                                        <strong>Ghi chú thanh toán: {{order.PaymentMethod}}</strong><br />
+                                        <strong>Vị trí đơn hàng:</strong>
+                                        <span ng-class="{'badge badge-secondary':order.PaymentStatus==0,'badge badge-dark':order.PaymentStatus==1,'badge bg-primary':order.PaymentStatus==2,
+                                                        'badge badge-info':order.PaymentStatus==3,'badge badge-light':order.PaymentStatus==4,'badge badge-primary':order.PaymentStatus==5,
+                                                        'badge badge-warning':order.PaymentStatus==6,'badge badge-success':order.PaymentStatus==7,'badge badge-danger':order.PaymentStatus==8}">
+                                            {{order.PaymentStatus |statusOrderFilter}}
+                                        </span><br />
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 invoice-col">
+                            <h5>
+                                <i class="fas fa-dollar-sign"></i> Thông tin thanh toán
+                            </h5>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th style="width: 50%">Tiền hàng:</th>
+                                        <td><i class="float-right">{{total | currency: "¥ " : 0 }}</i></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phí VC nội địa:</th>
+                                        <td><i class="float-right">{{order.TransportCNFree| currency: "¥ " : 0}}</i></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tổng tiền Tệ:</th>
+                                        <td><i class="float-right">{{total + order.TransportCNFree| currency: "¥ " : 0}} </i></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tỷ giá:</th>
+                                        <td><i class="float-right">{{order.ExchangeRate| currency: "" : 0}}</i></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tổng tiền Việt:</th>
+                                        <td><i class="float-right text-danger">{{(total + order.TransportCNFree)*order.ExchangeRate | currency: "" : 0}} đ</i></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phí Order(%):</th>
+                                        <td><i class="float-right">{{order.OrderFee}}%({{(((total + order.TransportCNFree)*order.ExchangeRate)*order.OrderFee)/100  | currency: "" : 0}} đ)</i></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tổng bill:</th>
+                                        <td><strong class="float-right text-danger">{{((total + order.TransportCNFree)*order.ExchangeRate) + ((((total + order.TransportCNFree)*order.ExchangeRate)*order.OrderFee)/100) | currency: "" : 0}} đ</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:15%;">Mã vận đơn</th>
+                                        <th style="width:10%;">Ảnh SP</th>
+                                        <th style="width:15%;">Link SP</th>
+                                        <th style="width:15%;">Màu sắc/Kích thước</th>
+                                        <th style="width:15%;">Ghi chú</th>
+                                        <th style="width:10%;">Giá SP(¥)</th>
+                                        <th style="width:5%;">SL</th>
+                                        <th style="width:10%;">Tổng</th>
+                                        <th style="width:5%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="od in orderDetail">
+                                        <td>{{od.TrackingID}}</td>
+                                        <td><img width="75" height="75" ng-src="/UploadedFiles/ProductImage/{{od.ProductImage}}" /></td>
+                                        <td><a href="http://{{od.ProductLink}}" target="_blank">{{od.ProductLink}}</a></td>
+                                        <td>{{od.ProductDetail}}</td>
+                                        <td>{{od.Description}}</td>
+                                        <td>{{od.CNPrice | currency: "¥ " : 0 }}</td>
+                                        <td>{{od.Quantity}}</td>
+                                        <td>{{od.CNPrice * od.Quantity | currency: "¥ " : 0 }}</td>
+                                        <td>
+<!--                                            <button type="button" class="btn btn-sm btn-primary"
+                                                    data-toggle="modal" data-target="#UpdateOrderDetail" data-backdrop="static" data-keyboard="false" ng-click="getODbyId()">
+                                                <i class="fa fa-edit"></i>
+                                            </button>-->
+                                            <button class="btn btn-sm btn-danger" ng-click="deleteOrderDetail(od.ID)"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="9">
+                                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#tblOrderDetail" data-backdrop="static" data-keyboard="false" ng-click="getListOrderDetail()">
+                                                <i class="fa fa-edit"></i> Cập nhật
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.invoice -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<!--Update Order-->
+<div class="modal fade" id="UpdateOrder">
+    <div class="modal-dialog modal-default">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-edit"></i> CẬP NHẬT ĐƠN HÀNG</h4>
+                <!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>-->
+            </div>
+            <form role="form" ng-submit="UpdateOrder()">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="TransportCNPrice" class="col-form-label">Phí VC nội địa:</label>
+                                    <input type="number" class="form-control" id="TransportCNPrice" ng-model="orderpopup.TransportCNFree">
+                                </div>
+                                <!-- select -->
+                                <div class="form-group">
+                                    <label for="OrderFee" class="col-form-label">Phí Order:</label>
+                                    <select class="form-control" id="OrderFee" ng-model="orderpopup.OrderFee" ng-options="orderfee.value as orderfee.description for orderfee in orderFee">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="ExchangeRate" class="col-form-label">Tỷ giá:</label>
+                                    <input type="number" class="form-control" id="ExchangeRate" ng-model="orderpopup.ExchangeRate">
+                                </div>
+                                <!-- select -->
+                                <div class="form-group">
+                                    <label class="col-form-label">Trạng thái:</label>
+                                    <select class="form-control" id="PaymentStatus" ng-model="orderpopup.PaymentStatus" ng-options="pmStatus.value as pmStatus.description for pmStatus in paymentStatus">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label class="col-form-label">Ghi chú đơn hàng:</label>
+                                    <textarea class="form-control" rows="3" placeholder="" ng-model="orderpopup.PaymentMethod"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" id="btnCloseUpdateOrder" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                    <button type="submit" id="btnUpdateOrder" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!--List Order Detail-->
+<div class="modal fade" id="tblOrderDetail">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-edit"></i> CẬP NHẬT CHI TIẾT ĐƠN HÀNG</h4>
+                <!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>-->
+            </div>
+            <form role="form" ng-submit="UpdateOrderDetail()">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:15%;">Mã vận đơn</th>
+                                            <th style="width:5%;">Ảnh SP</th>
+                                            <th style="width:20%;">Link SP</th>
+                                            <th style="width:20%;">Màu sắc/Kích thước</th>
+                                            <th style="width:15%;">Yêu cầu thêm</th>
+                                            <th style="width:10%;">Giá SP(¥)</th>
+                                            <th style="width:10%;">SL</th>
+                                            <th style="width:5%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="listod in listorderDetail">
+                                            <td><input type="text" class="form-control" id="TrackingID" ng-model="listod.TrackingID"/></td>
+                                            <td><img width="75" height="75" ng-src="/UploadedFiles/ProductImage/{{listod.ProductImage}}" /></td>
+                                            <td><a href="http://{{listod.ProductLink}}" target="_blank">{{listod.ProductLink}}</a></td>
+                                            <td><input type="text" class="form-control" id="ProductDetail" ng-model="listod.ProductDetail" /></td>
+                                            <td><input type="text" class="form-control" id="Description" ng-model="listod.Description" /></td>
+                                            <td><input type="number" class="form-control" id="CNPrice" ng-model="listod.CNPrice" /></td>
+                                            <td><input type="number" class="form-control" id="Quantity" ng-model="listod.Quantity" /></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" ng-click="deleteOrderDetail(listod.ID)"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" id="btnCloseUpdateOrderDetail" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Hủy</button>
+                    <button type="submit" id="btnUpdateOrderDetail" class="btn btn-success"><i class="fa fa-save"></i> Lưu</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script type="text/javascript">
+    $('#btnUpdateOrder').click(function () {
+        $('#UpdateOrder').modal('hide');
+    });
+    $('#btnUpdateOrderDetail').click(function () {
+        $('#tblOrderDetail').modal('hide');
+    });
+</script>

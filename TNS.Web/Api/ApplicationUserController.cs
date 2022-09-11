@@ -85,6 +85,23 @@ namespace TNS.Web.Api
 
         }
 
+        [Route("getbyname")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetUserByUsername(HttpRequestMessage request, string username)
+        {
+            var user = _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.NoContent, "Không tìm thấy theo yêu cầu.");
+            }
+            else
+            {
+                var applicationUserViewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user.Result);
+                return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
+            }
+        }
+
         [HttpPost]
         [Route("add")]
         //[Authorize(Roles = "AddUser")]

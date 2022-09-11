@@ -26,22 +26,29 @@ namespace TNS.Web
             //user
             routes.MapRoute(
                name: "User Index",
-               url: "Dashboard",
+               url: "trang-chu.html",
                defaults: new { controller = "Home", action = "UserIndex", tagId = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             //Add order Client 
             routes.MapRoute(
                name: "Add Order",
-               url: "orders/add-order",
+               url: "tao-don-hang.html",
                defaults: new { controller = "Order", action = "Index", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             //listorder Client
             routes.MapRoute(
-               name: "ListOrder",
-               url: "orders",
-               defaults: new { controller = "ShoppingCart", action = "ListOrder", id = UrlParameter.Optional },
+               name: "List Order",
+               url: "danh-sach-don-hang.html",
+               defaults: new { controller = "Order", action = "ListOrder", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //list orderdetail by id
+            routes.MapRoute(
+               name: "List OrderDetail ByID",
+               url: "danh-sach-don-hang/id={id}.html",
+               defaults: new { controller = "Order", action = "ListOrderDetailByID", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             //No order cart 
@@ -70,6 +77,26 @@ namespace TNS.Web
                defaults: new { controller = "ShoppingCart", action = "CancelOrder", id = UrlParameter.Optional },
                namespaces: new string[] { "TeduShop.Web.Controllers" }
               );
+            //Package
+            routes.MapRoute(
+              name: "Add Package",
+              url: "tao-don-ky-gui.html",
+              defaults: new { controller = "Package", action = "Index", id = UrlParameter.Optional },
+              namespaces: new string[] { "TeduShop.Web.Controllers" }
+              ); 
+            routes.MapRoute(
+              name: "List Package",
+              url: "danh-sach-ky-gui.html",
+              defaults: new { controller = "Package", action = "ListPackage", id = UrlParameter.Optional },
+              namespaces: new string[] { "TeduShop.Web.Controllers" }
+              );
+            //list orderdetail by id
+            routes.MapRoute(
+               name: "List PackageDetail ByID",
+               url: "danh-sach-ky-gui/id={id}.html",
+               defaults: new { controller = "Package", action = "ListPackageDetailByID", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
             //contact
             routes.MapRoute(
                name: "Contact",
@@ -140,13 +167,13 @@ namespace TNS.Web
                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
-            //logout
+/*            //logout
             routes.MapRoute(
                name: "Logout client",
                url: "logout.html",
                defaults: new { controller = "Account", action = "LogOut", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
-           );
+           );*/
             //introduce
             routes.MapRoute(
                name: "Giới thiệu",
@@ -187,6 +214,13 @@ namespace TNS.Web
                name: "Liên hệ",
                url: "lien-he.html",
                defaults: new { controller = "Home", action = "Contact", id = UrlParameter.Optional },
+               namespaces: new string[] { "TNS.Web.Controllers" }
+           );
+            //Tra cứu mã vận đơn
+            routes.MapRoute(
+               name: "Tra cứu MVD",
+               url: "tra-cuu-van-don.html",
+               defaults: new { controller = "Home", action = "SearchByTrackingID", id = UrlParameter.Optional },
                namespaces: new string[] { "TNS.Web.Controllers" }
            );
             routes.MapRoute(

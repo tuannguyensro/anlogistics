@@ -259,7 +259,7 @@ namespace TNS.Web.Controllers
         {
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignOut();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
 
         //

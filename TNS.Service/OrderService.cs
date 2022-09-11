@@ -15,7 +15,8 @@ namespace TNS.Service
     public interface IOrderService : ICrudService<Order>, IGetDataService<Order>
     {
         Order Add(ref Order order, List<OrderDetail> orderDetails);
-        IEnumerable<OrderClientViewModel> GetListOrders(string userId);
+        IEnumerable<Order> GetListOrders(string userId, int page, int pageSize, out int totalRow);
+        IEnumerable<OrderDetail> ListDetailByOrderID(int id);
         IEnumerable<Order> GetUnCompletedOrder();
         void UpdateStatus(int orderId);
     }
@@ -60,22 +61,27 @@ namespace TNS.Service
             }
         }
 
-        IEnumerable<OrderClientViewModel> IOrderService.GetListOrders(string userId)
+        IEnumerable<Order> IOrderService.GetListOrders(string userId, int page, int pageSize, out int totalRow)
         {
-            return _orderRepository.GetListOrder(userId).OrderBy(x => x.PaymentStatus);
+            var query =  _orderRepository.GetListOrder(userId).OrderByDescending(x => x.CreatedDate).ToList();
+            totalRow = query.Count();
+            return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public Order FindById(int id)
         {
             return _orderRepository.GetSingleById(id);
         }
-
+        public IEnumerable<OrderDetail> ListDetailByOrderID(int id)
+        {
+            return _orderDetailRepository.GetMulti(x => x.OrderID == id);
+        }
         public IEnumerable<Order> GetAll(string keyword)
         {
             if (string.IsNullOrEmpty(keyword))
                 return _orderRepository.GetAll();
             else
-                return _orderRepository.GetMulti(x => x.CustomerName.Contains(keyword));
+                return _orderRepository.GetMulti(x => x.OrderCode.Contains(keyword));
         }
 
         public IEnumerable<Order> GetUnCompletedOrder()

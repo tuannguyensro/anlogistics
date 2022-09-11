@@ -7,7 +7,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a ui-sref="home">Trang chủ</a></li>
                     <li class="breadcrumb-item active">Danh sách đơn hàng</li>
                 </ol>
             </div>
@@ -42,20 +42,22 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span>Trạng thái:</span>
-                        <a href="#">Khởi tạo (0)</a>
-                        <a href="#">Kho TQ nhận (0)</a>
-                        <a href="#">Xuất kho TQ (0)</a>
-                        <a href="#">Nhập kho VN (0)</a>
-                        <a href="#">Đang giao hàng (0)</a>
-                        <a href="#">Đã giao hàng (0)</a>
-                        <a href="#">Đã hủy (0)</a>
+                        <a href="#"><span class="badge badge-secondary">Chờ xác nhận (0)</span></a>
+                        <a href="#"><span class="badge badge-dark">Đã xác nhận (0)</span></a>
+                        <a href="#"><span class="badge badge-primary">Đã đặt hàng (0)</span></a>
+                        <a href="#"><span class="badge badge-info">Kho TQ nhận (0)</span></a>
+                        <a href="#"><span class="badge badge-light">Xuất kho TQ (0)</span></a>
+                        <a href="#"><span class="badge badge-primary">Nhập kho VN (0)</span></a>
+                        <a href="#"><span class="badge badge-warning">Đang giao hàng (0)</span></a>
+                        <a href="#"><span class="badge badge-success">Đã giao hàng (0)</span></a>
+                        <a href="#"><span class="badge badge-danger">Đã hủy (0)</span></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Nhập mã đơn hàng</label>
-                            <input class="form-control" type="text" f>
+                            <label>Nhập mã đơn hàng:</label>
+                            <input class="form-control" type="text" ng-model="keyword" placeholder="Nhập mã đơn hàng">
                         </div>
                         <!-- /.form-group -->
                     </div>
@@ -98,14 +100,18 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary float-right">Tìm kiếm</button>
+                <button ng-click="search()" type="submit" class="btn btn-primary float-right">Tìm kiếm</button>
             </div>
             <!-- /.card -->
         </div>
         <div class="row">
-            <div class="col-lg-6">
-                <button class="btn btn-primary" ui-sref="add_order">Thêm mới</button>
-                <button class="btn btn-danger" id="btnDelete" disabled ng-click="deleteOrderMulti()">Xóa dòng đã chọn</button>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!--<button class="btn btn-primary" ui-sref="add_order">Thêm mới</button>-->
+                        <button class="btn btn-danger" id="btnDelete" disabled ng-click="deleteOrderMulti()">Xóa dòng đã chọn</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -115,9 +121,9 @@
                         <h3 class="card-title">Danh sách đơn đặt hàng</h3>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body table-responsive p-0">
                         <table id="example2"
-                               class="table table-bordered table-hover">
+                               class="table table-bordered table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th style="width: 5%">
@@ -125,13 +131,13 @@
                                             <input type="checkbox" name="checkAll" ng-click="selectAll()" />
                                         </label>
                                     </th>
-                                    <th>Mã đơn hàng</th>
-                                    <th>Thời gian</th>
-                                    <th>Link sản phẩm</th>
-                                    <th>Tổng giá trị</th>
-                                    <th>Số tiền cọc</th>
-                                    <th>Số lượng</th>
-                                    <th>Trạng thái</th>
+                                    <th style="width: 15%">Thời gian</th>
+                                    <th style="width: 15%">Mã đơn hàng</th>
+                                    <th style="width: 15%">Chú thích</th>
+                                    <th style="width: 15%">Tình trạng</th>
+                                    <th style="width: 15%">Thông tin KH</th>
+                                    <th style="width: 15%">Trạng thái</th>
+                                    <th style="width: 5%">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,42 +145,48 @@
                                     <td>
                                         <input type="checkbox" name="checkSingle" ng-model="item.checked" />
                                     </td>
-                                    <td><a href="#">{{item.ID}}</a></td>
-                                    <td>{{item.CustomerName}}</td>
-                                    <td>{{item.ProductLink}}</td>
-                                    <td>{{item.CustomerEmail}}</td>
+                                    <td>{{item.CreatedDate | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                    <td><a  ui-sref="order_detail({id:item.ID})">{{item.OrderCode}}</a></td>
+                                    <td>{{item.CustomerMessage}}</td>
+                                    <td>{{item.PaymentMethod}}</td>
                                     <td>
-                                        <span ng-class="{'badge bg-red':item.PaymentStatus==0,'badge bg-green':item.PaymentStatus==2,'badge bg-blue':item.PaymentStatus==1}">
+                                        {{item.CreatedBy}}<br />
+                                        {{item.CustomerName}}<br />
+                                        {{item.CustomerMobile}}
+                                    </td>
+                                    <td>
+                                        <span ng-class="{'badge badge-secondary':item.PaymentStatus==0,'badge badge-dark':item.PaymentStatus==1,'badge bg-primary':item.PaymentStatus==2,
+                                                        'badge badge-info':item.PaymentStatus==3,'badge badge-light':item.PaymentStatus==4,'badge badge-primary':item.PaymentStatus==5,
+                                                        'badge badge-warning':item.PaymentStatus==6,'badge badge-success':item.PaymentStatus==7,'badge badge-danger':item.PaymentStatus==8}">
                                             {{item.PaymentStatus|statusOrderFilter}}
                                         </span>
                                     </td>
-                                    <td>{{item.Quantity}}</td>
-                                    <td>
-                                        <span ng-class="{'badge bg-red':item.Status==false,'badge bg-green':item.Status==true}">
-                                            {{item.Status|statusFilter}}
-                                        </span>
-                                    </td>
+                                    <td><button class="btn btn-sm btn-info" ui-sref="order_detail({id:item.ID})"><i class="fa fa-eye"></i></button></td>
                                 </tr>
                             <tfoot>
                                 <tr>
                                     <th></th>
-                                    <th>Mã đơn hàng</th>
                                     <th>Thời gian</th>
-                                    <th>Link sản phẩm</th>
-                                    <th>Tổng giá trị</th>
-                                    <th>Số tiền cọc</th>
-                                    <th>Số lượng</th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Chú thích</th>
+                                    <th>Tình trạng</th>
                                     <th>Trạng thái</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pagesCount}}" total-count="{{totalCount}}" search-func="getOrders(page)"></pager-directive>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
+                <!-- /.card -->
+            </div>
             <!-- /.col -->
-        </div>
     </div>
     <!-- /.container-fluid -->
 </section>

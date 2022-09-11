@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TNS.Common.ViewModels;
 using TNS.Model.Models;
 using TNS.Web.Models;
 
@@ -26,7 +27,10 @@ namespace TNS.Web.Mappings
                                 x.CreateMap<ContactDetail, ContactDetailViewModel>();
                                 x.CreateMap<Slide, SlideViewModel>();*/
                 x.CreateMap<Order, OrderViewModel>();
+                x.CreateMap<Order, OrderClientViewModel>();
                 x.CreateMap<OrderDetail, OrderDetailViewModel>();
+                x.CreateMap<Package, PackageViewModel>();
+                x.CreateMap<PackageDetail, PackageDetailViewModel>();
                 /*                x.CreateMap<Feedback, FeedbackViewModel>();
                                 x.CreateMap<Footer, FooterViewModel>();
                                 x.CreateMap<Page, PageViewModel>();

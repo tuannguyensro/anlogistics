@@ -10,7 +10,7 @@ namespace TNS.Data.Repositories
     {
         IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(string fromDate, string toDate);
 
-        IEnumerable<OrderClientViewModel> GetListOrder(string userId);
+        IEnumerable<Order> GetListOrder(string userId);
     }
 
     public class OrderRepository : RepositoryBase<Order>, IOrderRepository
@@ -20,10 +20,10 @@ namespace TNS.Data.Repositories
         {
         }
 
-        public IEnumerable<OrderClientViewModel> GetListOrder(string userId)
+        public IEnumerable<Order> GetListOrder(string userId)
         {
             var parameter = new SqlParameter("@UserId", userId);
-            return DbContext.Database.SqlQuery<OrderClientViewModel>("ListShoppingCart @UserId", parameter);
+            return DbContext.Database.SqlQuery<Order>("ListOrderCart @UserId", parameter);
         }
 
         public IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(string fromDate, string toDate)

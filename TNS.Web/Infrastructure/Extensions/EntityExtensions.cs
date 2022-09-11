@@ -12,23 +12,58 @@ namespace TNS.Web.Infrastructure.Extensions
         public static void UpdateOrder(this Order order, OrderViewModel orderViewModel)
         {
             order.ID = orderViewModel.ID;
+            order.OrderCode = "AL" + DateTime.Now.ToString("ddMMyyyyHHmmss");
             order.CustomerName = orderViewModel.CustomerName;
             order.CustomerEmail = orderViewModel.CustomerEmail;
             order.CustomerAddress = orderViewModel.CustomerAddress;
             order.CustomerMobile = orderViewModel.CustomerMobile;
             order.PaymentMethod = orderViewModel.PaymentMethod;
             order.PaymentStatus = orderViewModel.PaymentStatus;
+            order.Status = true;
             order.CustomerMessage = orderViewModel.CustomerMessage;
             order.CustomerId = orderViewModel.CustomerId;
-            order.CreatedDate = DateTime.Now;
             order.CreatedBy = orderViewModel.CreatedBy;
+            order.CreatedDate = DateTime.Now;
+            order.TransportCNFree = orderViewModel.TransportCNFree;
+            order.OrderFee = orderViewModel.OrderFee;
+            order.ExchangeRate = orderViewModel.ExchangeRate;
             order.WeightOrder = orderViewModel.WeightOrder;
-            order.TransportPrice = orderViewModel.TransportPrice;
-            order.TotalTransportPrice = orderViewModel.TotalTransportPrice;
-            order.TotalOriginalPrice = orderViewModel.TotalOriginalPrice;
-            order.ToTalPrice = orderViewModel.ToTalPrice;
+            order.WeightFee = orderViewModel.WeightFee;
+        }
+
+        public static void UpdateOrderDetail(this OrderDetail orderDetail, OrderDetailViewModel orderDetailViewModel)
+        {
+            orderDetail.TrackingID = orderDetailViewModel.TrackingID;
+            orderDetail.Quantity = orderDetailViewModel.Quantity;
+            orderDetail.CNPrice = orderDetailViewModel.CNPrice;
+            orderDetail.Description = orderDetailViewModel.Description;
+            orderDetail.ProductDetail = orderDetailViewModel.ProductDetail;
+            orderDetail.ProductLink = orderDetailViewModel.ProductLink;
+           
+        }
+
+        public static void UpdatePackage(this Package package, PackageViewModel packageViewModel)
+        {
+            package.ID = packageViewModel.ID;
+            package.PackageCode = "KG" + DateTime.Now.ToString("ddMMyyyyHHmmss");
+            package.CustomerName = packageViewModel.CustomerName;
+            package.CustomerEmail = packageViewModel.CustomerEmail;
+            package.CustomerAddress = packageViewModel.CustomerAddress;
+            package.CustomerMobile = packageViewModel.CustomerMobile;
+            package.PaymentMethod = packageViewModel.PaymentMethod;
+            package.PaymentStatus = packageViewModel.PaymentStatus;
+            package.CreatedBy = packageViewModel.CreatedBy;
+            package.CreatedDate = DateTime.Now;
+            package.CustomerId = packageViewModel.CustomerId;
+        }
+
+        public static void UpdatePackageDetail(this PackageDetail packageDetail, PackageDetailViewModel packageDetailViewModel)
+        {
+            packageDetail.TrackingID = packageDetailViewModel.TrackingID;
+            packageDetail.Description = packageDetailViewModel.Description;
 
         }
+
         public static void UpdateApplicationGroup(this ApplicationGroup appGroup, ApplicationGroupViewModel appGroupViewModel)
         {
             appGroup.ID = appGroupViewModel.ID;

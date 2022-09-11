@@ -10,16 +10,11 @@
                 parent: 'base',
                 templateUrl: "/app/components/orders/orderListView.html",
                 controller: "orderListController"
-            }).state('add_order', {
-                url: "/add_order",
+            }).state('order_detail', {
+                url: "/orders/:id",
                 parent: 'base',
-                templateUrl: "/app/components/orders/orderAddView.html",
-                controller: "orderAddController"
-            }).state('edit_order', {
-                url: "/edit_order/:id",
-                parent: 'base',
-                templateUrl: "/app/components/orders/orderEditView.html",
-                controller: "orderEditController"
+                templateUrl: "/app/components/orders/orderDetailView.html",
+                controller: "orderDetailController"
             });
     }
 })();

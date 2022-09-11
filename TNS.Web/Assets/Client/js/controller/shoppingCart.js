@@ -1,21 +1,14 @@
 ﻿var cart = {
     init: function () {
-        cart.loadData();
+        //cart.loadData();
         cart.registerEvents();
     },
     registerEvents: function () {
-        $('#btnRemoveItem').off('click').on('click', function (e) {
-            e.preventDefault();
-            var result = confirm("Bạn muốn xóa sản phẩm này?");
-            if (result) {
-                var productId = parseInt($(this).data('id'));
-                cart.deleteItem(productId);
-            }
-
+        $("#ProductImage").on('click', function () {
+            cart.uploadImage();
         });
-
         $('#btnCheckout').off('click').on('click', function (e) {
-            e.preventDefault();        
+            e.preventDefault();
             cart.createOrder();
         });
         $('#btnDeleteAll').off('click').on('click', function (e) {
@@ -60,6 +53,7 @@
             }
         })
     },
+
     createOrder: function () {
         var orderArr = [];
         orderArr.length = 0;
@@ -67,7 +61,7 @@
         $($("#tblOrderDetail tbody tr").each(function () {
             var orderItem = {
                 ProductLink: $(this).find('td:eq(0)').find('input[type="text"]').val(),
-                ProductImage: $(this).find('td:eq(1)').find('input[type="text"]').val(),
+                ProductImage: $(this).find('td:eq(1)').find('input[type="file"]').val().replace(/^.*\\/, ""),
                 ProductDetail: $(this).find('td:eq(2)').find('input[type="text"]').val(),
                 Quantity: $(this).find('td:eq(3)').find('input[type="number"]').val(),
                 Description: $(this).find('td:eq(4)').find('input[type="text"]').val()
@@ -76,35 +70,58 @@
         }));
 
         var order = {
-            CustomerName: $('#fullname').val(),
-            CustomerEmail: $('#email').val(),
-            CustomerAddress: $('#address').val(),
-            CustomerMobile: $('#phone').val(),
-            CustomerMessage: $('#message').val(),
+            "CustomerName": $('#fullname').val(),
+            "CustomerEmail": $('#email').val(),
+            "CustomerAddress": $('#address').val(),
+            "CustomerMobile": $('#phone').val(),
+            "CustomerMessage": $('#message').val(),
             PaymentStatus: 0,
             Status: true,
-            OrderDetails : orderArr
-        }
+            "OrderDetails": orderArr
+        };
         $.ajax({
-            url: '/Order/CreateOrder',
             type: 'POST',
             dataType: 'json',
+            url: '/Order/CreateOrder',
             data: {
                 orderViewModel: JSON.stringify(order)
             },
             success: function (data) {
                 if (data.status) {
                     alert('Thêm đơn hàng thành công');
-                    window.location.href = "/orders";
+                    window.location.href = "/danh-sach-don-hang.html";
                     cart.deleteAll("");
                 }
-                else
-                {
+                else {
                     alert('Có lỗi xảy ra. Vui lòng kiểm tra lại đơn hàng');
                 }
             },
-            error: function (error) {
-                console.log(error);
+            error: function (data) {
+                alert('Có lỗi xảy ra. Vui lòng kiểm tra lại đơn hàng');
+            }
+        })
+    },
+    uploadImage: function () {
+        $('#ProductImage').change(function () {
+            if (window.FormData != undefined) {
+                var productImage = $('#ProductImage').get(0);
+                var files = productImage.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Order/ProcessUpload',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (urlImage) {
+                        $('#blah').attr('src', urlImage);
+                        $('#ProductImage').val(urlImage);
+                    },
+                    error: function (err) {
+                        alert('Có lỗi xảy ra. Vui lòng kiểm tra lại đơn hàng');
+                    }
+                })
             }
         })
     },

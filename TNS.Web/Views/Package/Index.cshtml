@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@section footerJS {
+    <script src="~/Assets/libs/jquery/jquery.js"></script>
+    <script src="~/Assets/Admin/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+    <script src="~/Assets/Client/js/controller/addPackage.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnDelete").show();
+            var i = 0;
+            i++;
+
+            $('#addRow').click(function () {
+                $('#tbody').append('<tr id="rowPackageDetail' + i + '">' +
+                    '<td><a><input id="PackageID" name="PackageID[]" class="form-control"type="text" value=""placeholder="Nhập mã vận đơn ký gửi" /></a><span class="error text-danger">*Không được để trống</span></td> ' +
+                    '<td><a><input id="Description" name="Description[]" class="form-control" type="text" value="" placeholder="Nhập ghi chú" /></a></td>' +
+                    '<td><button class="btn btn-sm btn-danger remove" id="btnDelete"><i class="fa fa-trash"></i></button></td>' +
+                    '</tr>');
+                $("#btnDelete").hide();
+            });
+
+            $(document).on('click', '.remove', function () {
+                $(this).closest("tr").remove();
+            });
+            $("#btnDelete").hide();
+        });
+    </script>
+}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tạo đơn hàng ký gửi</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Tạo đơn ký gửi</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin đơn hàng ký gửi</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div id="actions" class="row">
+                                <div class="col-lg-6">
+                                    <div class="btn-group w-100">
+                                        <button id="addRow" class="btn btn-success col fileinput-button">
+                                            <i class="fas fa-plus"></i>
+                                            <span>Thêm sản phẩm</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary col start">
+                                            <i class="fas fa-upload"></i>
+                                            <span>Upload</span>
+                                        </button>
+                                        <button type="reset" class="btn btn-warning col cancel">
+                                            <i class="fas fa-download"></i>
+                                            <span>Tải file mẫu</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 d-flex align-items-center">
+                                    <div class="fileupload-process w-100">
+                                        <div id="total-progress"
+                                             class="progress progress-striped active"
+                                             role="progressbar"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"
+                                             aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success"
+                                                 style="width: 0%"
+                                                 data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="tblPackageDetail" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 45%">Mã vận đơn ký gửi</th>
+                                        <th style="width: 45%">Ghi chú</th>
+                                        <th style="width: 10%">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    <tr id="rowPackageDetail">
+                                        <td>
+                                            <a>
+                                                <input id="PackageID" name="PackageID[]" class="form-control"
+                                                       type="text" value=""
+                                                       placeholder="Nhập mã vận đơn ký gửi" />
+                                            </a>
+                                            <span class="error text-danger">*Không được để trống</span>
+                                        </td>
+                                        <td>
+                                            <a>
+                                                <input id="Description" name="Description[]" class="form-control"
+                                                       type="text" value=""
+                                                       placeholder="Nhập ghi chú" />
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger remove" id="btnDelete"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-danger float-right">
+                                <i class="fas fa-trash"></i> Xóa toàn bộ
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin khách hàng</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body" id="userinfo">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        <!-- text input -->
+                                        <div class="form-group" id="LoadUserInfo">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="btnLoadUserInfo" value="option1">
+                                                <label for="btnLoadUserInfo" class="custom-control-label">Lấy thông tin của tôi</label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Họ và tên:</label>
+                                        <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Nhập họ và tên">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Số điện thoại:</label>
+                                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Nhập số điện thoại">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <input type="text" id="email" name="email" class="form-control" placeholder="Địa chỉ email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- textarea -->
+                                    <div class="form-group">
+                                        <label>Địa chỉ:</label>
+                                        <textarea class="form-control" id="address" name="address" rows="3" placeholder="Nhập địa chỉ"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- textarea -->
+                                    <div class="form-group">
+                                        <label>Ghi chú:</label>
+                                        <textarea class="form-control" id="message" name="comment" rows="3" placeholder="Nhập ghi chú"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Hủy đơn hàng</button>
+                            <button type="submit" class="btn btn-primary float-right" id="btnCheckout">
+                                <i class="fas fa-edit"></i>
+                                Tạo đơn hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,0 +1,189 @@
+﻿@model IEnumerable<TNS.Web.Models.OrderDetailViewModel>
+@{
+    var order = (TNS.Web.Models.OrderViewModel)ViewBag.Order;
+    ViewBag.Title = "ListOrderDetailByID";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Chi tiết đơn hàng</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Chi tiết đơn hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Main content -->
+                    <div class="invoice p-3 mb-3">
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    <i class="fas fa-globe"></i> AN LOGISTICS
+                                    <small class="float-right">Ngày đặt: @order.CreatedDate</small>
+                                </h4>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- info row -->
+                        <div class="row invoice-info">
+                            <div class="col-sm-8 invoice-col">
+                                <div class="row invoice-info">
+                                    <div class="col-sm-12 invoice-col">
+                                        <h5><i class="fas fa-user"></i> Thông tin khách hàng</h5>
+                                        <address>
+                                            <strong>ID đơn hàng:</strong><strong class="text-orange"> @order.OrderCode</strong><br />
+                                            <strong>Tài khoản:</strong> @order.CreatedBy<br />
+                                            <strong>Họ và tên:</strong> @order.CustomerName<br />
+                                            <strong>Điện thoại:</strong> @order.CustomerMobile<br />
+                                            <strong>Địa chỉ:</strong> @order.CustomerAddress<br />
+                                            <strong>Ghi chú:</strong><strong class="text-danger"> @order.CustomerMessage</strong><br />
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <div class="row invoice-info">
+                                    <div class="col-sm-12 invoice-col">
+                                        <h5>
+                                            <i class="fas fa-history"></i> Tình trạng đơn hàng:
+                                        </h5>
+                                        <address>
+                                            <strong>Hình thức thanh toán: @order.PaymentMethod</strong><br />
+                                            <strong>Vị trí đơn hàng:</strong>
+                                                <span class="@(order.PaymentStatus == 0 ? "badge badge-secondary" : order.PaymentStatus == 1 ? "badge badge-dark" : order.PaymentStatus == 2 ? "badge badge-primary" :
+                                                               order.PaymentStatus == 3 ? "badge badge-info" : order.PaymentStatus == 4 ? "badge badge-light" : order.PaymentStatus == 5 ? "badge badge-primary" : order.PaymentStatus == 6 ? "badge badge-warning" :
+                                                               order.PaymentStatus == 7 ? "badge badge-success" : "badge badge-danger")">
+                                                    @(order.PaymentStatus == 0 ? "Chờ xác nhận" : order.PaymentStatus == 1 ? "Đã xác nhận" : order.PaymentStatus == 2 ? "Đã đặt hàng" :
+                                                      order.PaymentStatus == 3 ? "Kho TQ nhận" : order.PaymentStatus == 4 ? "Xuất kho TQ" : order.PaymentStatus == 5 ? "Nhập kho VN" : order.PaymentStatus == 6 ? "Đang giao hàng" :
+                                                      order.PaymentStatus == 7 ? "Đã giao hàng" : "Đã hủy")
+                                                </span><br />
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                <h5>
+                                    <i class="fas fa-dollar-sign"></i> Thông tin thanh toán
+                                </h5>
+
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tr>
+                                            <th style="width: 50%">Tiền hàng:</th>
+                                            <td><p class="float-right" id="totalOrder"></p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phí VC nội địa:</th>
+                                            <td><p class="float-right" id="TransportCNFree" data-transportcnfree="@order.TransportCNFree">¥@order.TransportCNFree.ToString("N0")</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phí Order(%):</th>
+                                            <td><p class="float-right" id="OrderFee" data-orderfee="@order.OrderFee">@(order.OrderFee)%</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tổng tiền Tệ:</th>
+                                            <td><p class="float-right" id="TotalCNPrice"></p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tỷ giá:</th>
+                                            <td><p class="float-right" id="ExchangeRate" data-exchangerate="@order.ExchangeRate">@order.ExchangeRate.ToString("N0") </p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tổng tiền Việt:</th>
+                                            <td><strong class="float-right text-danger" id="TotalVNPrice"></strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-12 table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã vận đơn</th>
+                                            <th>Ảnh SP</th>
+                                            <th>Link SP</th>
+                                            <th>Màu sắc/Kích thước</th>
+                                            <th>Ghi chú</th>
+                                            <th>Giá SP</th>
+                                            <th>Số lượng</th>
+                                            <th>Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in Model)
+                                        {
+                                            <tr>
+                                                <td>@(detail.TrackingID == null ? "Đang cập nhật" : detail.TrackingID)</td>
+                                                <td><img width="75" height="75" src="~/UploadedFiles/ProductImage/@detail.ProductImage"/></td>
+                                                <td><a href="http://@detail.ProductLink" target="_blank">@detail.ProductLink</a></td>
+                                                <td>@detail.ProductDetail</td>
+                                                <td>@detail.Description</td>
+                                                <td>¥@detail.CNPrice.ToString("N0")</td>
+                                                <td class="Quantity" data-price="@detail.CNPrice" data-quantity="@detail.Quantity">@detail.Quantity</td>
+                                                <td>¥@((detail.CNPrice * detail.Quantity).ToString("N0"))</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+                        <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-12">
+                                <a href="invoice-print.html"
+                                   rel="noopener"
+                                   target="_blank"
+                                   class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                                <button type="button" class="btn btn-success float-right">
+                                    <i class="far fa-credit-card"></i> Submit Payment
+                                </button>
+                                <button type="button"
+                                        class="btn btn-primary float-right"
+                                        style="margin-right: 5px">
+                                    <i class="fas fa-print"></i> In đơn hàng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.invoice -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@section footerJS{
+    <script src="https://unpkg.com/mustache@4.1.0/mustache.js"></script>
+    <script src="~/Assets/libs/moment.js/moment.js"></script>
+    <script src="~/Assets/libs/numeral.js/numeral.min.js"></script>
+    <script src="~/Assets/Client/js/controller/listOrderDetailClient.js"></script>
+}

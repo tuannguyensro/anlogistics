@@ -24,6 +24,8 @@ namespace TNS.Data
         public DbSet<MenuGroup> MenuGroups { set; get; }
         public DbSet<Order> Orders { set; get; }
         public DbSet<OrderDetail> OrderDetails { set; get; }
+        public DbSet<Package> Packages { set; get; }
+        public DbSet<PackageDetail> PackageDetails { set; get; }
         public DbSet<Page> Pages { get; set; }
 
       

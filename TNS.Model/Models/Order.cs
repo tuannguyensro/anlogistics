@@ -33,12 +33,16 @@ namespace TNS.Model.Models
 
         public string CustomerMessage { get; set; }
 
-        public int? WeightOrder { get; set; }
-        public decimal? TransportPrice { get; set; }
-        public decimal? TotalTransportPrice { get; set; }
-        public decimal? TotalOriginalPrice { get; set; }
+        public decimal TransportCNFree { get; set; }
 
-        public decimal? ToTalPrice { get; set; }
+        public int OrderFee { get; set; }
+
+        public decimal ExchangeRate { get; set; }
+
+        public int WeightOrder { get; set; }
+
+        public decimal WeightFee { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         [Column(TypeName ="varchar")]

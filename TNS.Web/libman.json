@@ -7,10 +7,6 @@
       "destination": "Assets/libs/angular-ui-router/"
     },
     {
-      "library": "angular.js@1.8.2",
-      "destination": "Assets/libs/angular.js/"
-    },
-    {
       "library": "angular-local-storage@0.7.1",
       "destination": "Assets/libs/angular-local-storage/"
     },
@@ -19,20 +15,48 @@
       "destination": "Assets/libs/"
     },
     {
-      "library": "toastr.js@2.1.4",
-      "destination": "Assets/libs/toastr.js/"
-    },
-    {
-      "library": "bootbox.js@5.5.2",
-      "destination": "Assets/libs/bootbox.js/"
-    },
-    {
       "library": "checklist-model@1.0.0",
       "destination": "Assets/libs/checklist-model/"
     },
     {
+      "library": "jquery@3.6.0",
+      "destination": "Assets/libs/jquery/"
+    },
+    {
+      "library": "numeral.js@2.0.6",
+      "destination": "Assets/libs/numeral.js/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "Assets/libs/toastr.js/"
+    },
+    {
       "library": "mustache.js@4.2.0",
       "destination": "Assets/libs/mustache.js/"
+    },
+    {
+      "library": "angular.js@1.8.3",
+      "destination": "Assets/libs/angular.js/",
+      "files": [
+        "angular.min.js",
+        "angular.js"
+      ]
+    },
+    {
+      "library": "bootbox.js@5.5.3",
+      "destination": "Assets/libs/bootbox.js/"
+    },
+    {
+      "library": "jquery-migrate@3.4.0",
+      "destination": "Assets/libs/jquery-migrate/"
+    },
+    {
+      "library": "moment.js@2.29.4",
+      "destination": "Assets/libs/moment.js/",
+      "files": [
+        "moment.min.js",
+        "moment.js"
+      ]
     }
   ]
 }

@@ -19,13 +19,11 @@ namespace TNS.Model.Models
         [Column(TypeName = "varchar")]
         public string Email { get; set; }
 
-        [Column(TypeName ="varchar")]
-        [MaxLength(100)]
-        public string Website { get; set; }
-
         [MaxLength(20)]
         [Column(TypeName = "varchar")]
         public string Phone { get; set; }
+
+        public decimal? Money { get; set; }
 
         [MaxLength(150)]
         public string Address { get; set; }
@@ -37,5 +35,11 @@ namespace TNS.Model.Models
 
         [Required]
         public bool Status { get; set; }
+
+        [MaxLength(128)]
+        public string CustomerId { get; set; }
+
+        [ForeignKey("CustomerId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

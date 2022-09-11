@@ -1,110 +1,68 @@
-﻿@model TNS.Web.Models.ShoppingCartViewModel
+﻿@model TNS.Web.Models.OrderViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 @section footerJS {
+    <script src="~/Assets/libs/jquery/jquery.js"></script>
+    <script src="~/Assets/Admin/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
     <script src="~/Assets/Client/js/controller/shoppingCart.js"></script>
-    <script>
+    <script type="text/javascript">
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+    <script type="text/javascript">
         $(document).ready(function () {
+            $("#btnDelete").show();
+            var i = 0;
+            i++;
 
-            $("#addorder").DataTable({
-                paging: true,
-                lengthChange: false,
-                searching: false,
-                ordering: false,
-                info: true,
-                autoWidth: false,
-                responsive: true,
-                language: {
-                    emptyTable: "Chưa có sản phẩm nào, vui lòng chọn Thêm sản phẩm"
-                }
-            });
-
-            $('#addRow').on('click', function () {
-                // Adding a row inside the tbody.
-                $('#tbody').append(`            <tr>
-                                                                        <td>
-                                                                            <a>
-                                                                                <input id="ProductLink" name="ProductLink" class="form-control"
-                                                                                       type="text"
-                                                                                       placeholder="Nhập link sản phẩm" />
-                                                                                <span class="error text-danger">*Không được để trống</span>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="row">
-                                                                                <div class="custom-file col-md-9">
-                                                                                    <input type="file"
-                                                                                    class="custom-file-input"
-                                                                                    id="ProductImage" name="ProductImage" onchange="readURL(this);"/>
-                                                                                <label class="custom-file-label"
-                                                                                    for="ProductImage">Choose file</label>
-                                                                                <span class="error text-danger">*Không được để trống</span>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <img id="blah" style="width:50px; height:50px;" src="/Assets/Admin/dist/img/defaut.png" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a>
-                                                                                <input id="ProductDetail" name="ProductDetail" class="form-control"
-                                                                                       type="text"
-                                                                                       placeholder="Chọn màu sắc, kích thước" />
-                                                                                <span class="error text-danger">*Không được để trống</span>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a>
-                                                                                <input id="Quantity"  name="Quantity" class="form-control"
-                                                                                       type="number" />
-                                                                                <span class="error text-danger">*Chọn SL</span>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a>
-                                                                                <input id="Description"  name="Description" class="form-control"
-                                                                                       type="text"
-                                                                                       placeholder="Yêu cầu thêm" />
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <button class="btn btn-block btn-danger remove"><i class="fa fa-trash"></i></button>
-                                                                        </td>
-                                                                    </tr>`);
-            });
-
-            $('#addorder').on('click', '.remove', function () {
-                var table = $('#addorder').DataTable();
-                table
-                    .row($(this).parents('tr'))
-                    .remove()
-                    .draw();
+            $('#addRow').click(function () {
+                $('#tbody').append('<tr id="rowOrderDetail' + i + '">' +
+                    '<td><a><input id="ProductLink" name="ProductLink[]" class="form-control"type="text" value=""placeholder="Nhập link sản phẩm" /></a><span class="error text-danger">*Không được để trống</span></td> ' +
+                    '<td><div class="row"><div class="custom-file col-md-9"><input type="file" class="custom-file-input" id="ProductImage" name="ProductImage" accept="image/*" />' +
+                    '<label class= "custom-file-label" for="ProductImage">Chọn ảnh</label>' +
+                    '<span class="error text-danger">*Không được để trống</span>' +
+                    '</div >' +
+                    '<div class="col-md-3"><img id="blah" name="blah" style="width:50px; height:50px;" src="/UploadedFiles/ProductImage/defaut.png" /></div></div >' +
+                    '</td>' +
+                    '<td><a><input id="ProductDetail" name="ProductDetail[]" class="form-control" type="text" value="" placeholder="Chọn màu sắc, kích thước" /><span class= "error text-danger" >* Không được để trống</span ></a></td>' +
+                    '<td><a><input id="Quantity" name="Quantity[]" class="form-control" type="number" value="" /><span class="error text-danger">*Chọn SL</span></a></td>' +
+                    '<td><a><input id="Description" name="Description[]" class="form-control" type="text" value="" placeholder="Yêu cầu thêm" /></a></td>' +
+                    '<td><button class="btn btn-sm btn-danger remove" id="btnDelete"><i class="fa fa-trash"></i></button></td>' +
+                    '</tr>');
+                $("#btnDelete").hide();
             });
 
             $(document).on('click', '.remove', function () {
                 $(this).closest("tr").remove();
             });
-        });
-    </script>
-    <script src="~/Assets/Admin/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
-    <script>
-        $(function () {
-            bsCustomFileInput.init();
-        });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+            $("#btnDelete").hide();
 
-                reader.onload = function (e) {
-                    $('#blah')
-                        .attr('src', e.target.result);
-                };
+            $(document).on('change', '.custom-file-input', function (event) {
+                $(this).next('.custom-file-label').html(event.target.files[0].name);
+            });
+            $("#ProductImage").on('change', function () {
+                var input = $(this)[0];
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#blah").attr('src', e.target.result).fadeIn('slow');
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
 
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+@*        function AddOrderRow() {
+            $("#btnDelete").show();
+            var tblBody = $("#tblOrderDetail").find("tbody");
+            var tblLastRow = tblBody.find("tr:last");
+            var tblClone = tblLastRow.clone().find("input[type=text]").val('').end();
+            tblLastRow.after(tblClone);
+            $("#btnDelete").hide();
+        };*@
     </script>
 }
 <!-- Content Wrapper. Contains page content -->
@@ -129,7 +87,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="container-fluid">
+        <div class="container-fluid"  method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12">
                     <!-- SELECT2 EXAMPLE -->
@@ -142,10 +100,10 @@
                             <div id="actions" class="row">
                                 <div class="col-lg-6">
                                     <div class="btn-group w-100">
-                                        <span id="addRow" class="btn btn-success col fileinput-button">
+                                        <button id="addRow" class="btn btn-success col fileinput-button">
                                             <i class="fas fa-plus"></i>
                                             <span>Thêm sản phẩm</span>
-                                        </span>
+                                        </button>
                                         <button type="submit" class="btn btn-primary col start">
                                             <i class="fas fa-upload"></i>
                                             <span>Upload</span>
@@ -174,19 +132,19 @@
                             <table id="tblOrderDetail" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20%">Link sản phẩm</th>
+                                        <th style="width: 25%">Link sản phẩm</th>
                                         <th style="width: 20%">Ảnh sản phẩm</th>
                                         <th style="width: 20%">Màu sắc/Kích thước</th>
                                         <th style="width: 10%">Số lượng</th>
                                         <th style="width: 20%">Yêu cầu thêm</th>
-                                        <th style="width: 10%">Thao tác</th>
+                                        <th style="width: 5%">TT</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    <tr>
+                                    <tr id="rowOrderDetail">
                                         <td>
                                             <a>
-                                                <input id="ProductLink" name="ProductLink" class="form-control"
+                                                <input id="ProductLink" name="ProductLink[]" class="form-control"
                                                        type="text" value=""
                                                        placeholder="Nhập link sản phẩm" />
                                             </a>
@@ -197,20 +155,20 @@
                                                 <div class="custom-file col-md-9">
                                                     <input type="file"
                                                            class="custom-file-input"
-                                                           id="ProductImage" name="ProductImage" onchange="readURL(this);"/>
+                                                           id="ProductImage" name="ProductImage[]" accept="image/*" />
                                                     <label class="custom-file-label"
-                                                           for="ProductImage">Choose file</label>
+                                                           for="ProductImage">Chọn ảnh</label>
                                                     <span class="error text-danger">*Không được để trống</span>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <img id="blah" style="width:50px; height:50px;" src="~/Assets/Admin/dist/img/defaut.png" />
+                                                    <img id="blah" name="blah[]" style="width:50px; height:50px;" src="~/UploadedFiles/ProductImage/defaut.png" />
                                                 </div>
                                             </div>
 
                                         </td>
                                         <td>
                                             <a>
-                                                <input id="ProductDetail" name="ProductDetail" class="form-control"
+                                                <input id="ProductDetail" name="ProductDetail[]" class="form-control"
                                                        type="text" value=""
                                                        placeholder="Chọn màu sắc, kích thước" />
                                                 <span class="error text-danger">*Không được để trống</span>
@@ -218,20 +176,20 @@
                                         </td>
                                         <td>
                                             <a>
-                                                <input id="Quantity" name="Quantity" class="form-control"
+                                                <input id="Quantity" name="Quantity[]" class="form-control"
                                                        type="number" value="" />
                                                 <span class="error text-danger">*Chọn SL</span>
                                             </a>
                                         </td>
                                         <td>
                                             <a>
-                                                <input id="Description" name="Description" class="form-control"
+                                                <input id="Description" name="Description[]" class="form-control"
                                                        type="text" value=""
                                                        placeholder="Yêu cầu thêm" />
                                             </a>
                                         </td>
                                         <td>
-                                            <button class="btn btn-block btn-danger remove"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-block btn-danger remove" id="btnDelete"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -241,7 +199,7 @@
                         <!-- /.row -->
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-danger float-right">
+                            <button type="submit" class="btn btn-danger float-right" id="btnDeleteAll">
                                 <i class="fas fa-trash"></i> Xóa toàn bộ
                             </button>
                         </div>

@@ -88,6 +88,9 @@
     <Compile Include="Services\Int32\IGetDataService.cs" />
     <Compile Include="ViewModels\OrderClientViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\OrderDetailClientViewModel.cs" />
+    <Compile Include="ViewModels\PackageClientViewModel.cs" />
+    <Compile Include="ViewModels\PackageDetailClientViewModel.cs" />
     <Compile Include="ViewModels\RevenueStatisticViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

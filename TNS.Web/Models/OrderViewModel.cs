@@ -6,34 +6,34 @@ using System.Web;
 
 namespace TNS.Web.Models
 {
+    [Serializable]
     public class OrderViewModel
     {
         public int ID { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string CustomerName { get; set; }
 
-        [Required]
         [MaxLength(250)]
         public string CustomerAddress { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string CustomerEmail { get; set; }
 
-        [Required]
         [MaxLength(50)]
         public string CustomerMobile { get; set; }
 
-        [Required]
         public string CustomerMessage { get; set; }
-        public int? WeightOrder { get; set; }
-        public decimal? TransportPrice { get; set; }
-        public decimal? TotalTransportPrice { get; set; }
-        public decimal? TotalOriginalPrice { get; set; }
 
-        public decimal? ToTalPrice { get; set; }
+        public decimal TransportCNFree { get; set; }
+
+        public int OrderFee { get; set; }
+
+        public decimal ExchangeRate { get; set; }
+
+        public int WeightOrder { get; set; }
+
+        public decimal WeightFee { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
@@ -52,11 +52,13 @@ namespace TNS.Web.Models
         [Required]
         public bool Status { get; set; }
 
-        public string BankCode { get; set; }
+        public string OrderCode { get; set; }
 
         [MaxLength(128)]
         public string CustomerId { get; set; }
 
-        public virtual IEnumerable<OrderDetailViewModel> OrderDetails { get; set; }
+        public int NumberDecimalDigits { get; set; }
+
+        public virtual ICollection<OrderDetailViewModel> OrderDetails { get; set; }
     }
 }

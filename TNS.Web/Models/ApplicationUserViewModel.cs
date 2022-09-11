@@ -10,12 +10,12 @@ namespace TNS.Web.Models
         public string Id { set; get; }
         public string FullName { set; get; }
         public DateTime BirthDay { set; get; }
-        public string Bio { set; get; }
         public string Email { set; get; }
         public string Password { set; get; }
         public string UserName { set; get; }
         public string Gender { set; get; }
         public string Image { get; set; }
+        public string Address { set; get; }
         public bool IsDeleted { get; set; }
         public bool IsViewed { get; set; }
         public bool? EmailConfirmed { get; set; }

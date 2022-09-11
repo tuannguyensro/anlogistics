@@ -5,7 +5,9 @@
 
         var authentication = {
             IsAuthenticated: false,
-            userName: ""
+            userName: "",
+            image: "",
+            createdDate: ""
         };
         authDataFactory.authenticationData = authentication;
 

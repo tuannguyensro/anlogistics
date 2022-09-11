@@ -59,41 +59,27 @@
             </li>
             <li class="nav-item dropdown user-menu">
                 <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="../../../Assets/Admin/dist/img/user2-160x160.jpg"
+                    <img src="{{authentication.image}}"
                          class="user-image img-circle elevation-2"
                          alt="User Image" />
-                    <span class="d-none d-md-inline">Alexander Pierce</span>
+                    <span class="d-none d-md-inline">{{authentication.userName}}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
-                        <img src="../../../Assets/Admin/dist/img/user2-160x160.jpg"
+                        <img src="{{authentication.image}}"
                              class="img-circle elevation-2"
                              alt="User Image" />
 
                         <p>
-                            Alexander Pierce - Web Developer
-                            <small>Member since Nov. 2012</small>
+                            {{authentication.userName}}
+                            <small>{{authentication.createdDate | date: 'dd/MM/yyyy'}}</small>
                         </p>
                     </li>
                     <!-- Menu Body -->
-                    <li class="user-body">
-                        <div class="row">
-                            <div class="col-4 text-center">
-                                <a href="#">Followers</a>
-                            </div>
-                            <div class="col-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-4 text-center">
-                                <a href="#">Friends</a>
-                            </div>
-                        </div>
-                        <!-- /.row -->
-                    </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                        <a href="#" class="btn btn-default btn-flat">Tài khoản</a>
                         <a  href="#" ng-click="logOut()" class="btn btn-default btn-flat float-right">Thoát</a>
                     </li>
                 </ul>
@@ -101,15 +87,6 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                     <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                   data-widget="control-sidebar"
-                   data-slide="true"
-                   href="#"
-                   role="button">
-                    <i class="fas fa-th-large"></i>
                 </a>
             </li>
         </ul>
@@ -127,19 +104,19 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <strong>
-            Copyright &copy; 2014-2021
-            <a href="https://adminlte.io">AdminLTE.io</a>.
+            Copyright &copy; 2022
+            <a href="/">AN LOGISTICS</a>.
         </strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 3.1.0
+            <b>Version</b> 1.1.0
         </div>
     </footer>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    <!--<aside class="control-sidebar control-sidebar-dark">-->
         <!-- Control sidebar content goes here -->
-    </aside>
+    <!--</aside>-->
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->

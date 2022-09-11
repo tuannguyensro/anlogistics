@@ -7,7 +7,6 @@ namespace TNS.Web.Models
 {
     public class ShoppingCartViewModel
     {
-        public long ProductID { get; set; }
 
         public string ProductLink { get; set; }
 

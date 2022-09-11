@@ -14,8 +14,8 @@ namespace TNS.Web
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            AreaRegistration.RegisterAllAreas();
             AutoMapperConfiguration.Configure();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

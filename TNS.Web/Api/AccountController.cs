@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
@@ -18,6 +15,7 @@ namespace TNS.Web.Api
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
         public AccountController()
         {
         }
@@ -66,6 +64,7 @@ namespace TNS.Web.Api
             var result = await SignInManager.PasswordSignInAsync(userName, password, rememberMe, shouldLockout: false);
             return request.CreateResponse(HttpStatusCode.OK, result);
         }
+
         [HttpPost]
         [Authorize]
         [Route("logout")]

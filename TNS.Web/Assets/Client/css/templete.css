@@ -805,7 +805,7 @@ ul.u-list li {
 	.disnone-sm{ display:none; }
 }
 @media only screen and (max-width: 767px) {
-	.disnone-xs{ display:nonenone; }
+	.disnone-xs{ display:none; }
 	.our-gallery .dez-media img, 
 	.our-gallery .dez-post-media img { min-height: 320px; object-fit: cover;  width: 100%;}
 	.benefits-yoga .dez-box.right{ margin-left: 0; }
@@ -1188,9 +1188,9 @@ hr{
 		width: 80px;
 		font-size: 14px;
 	}
-	.styleswitcher{
-		display: none;
-	}
+    .styleswitcher {
+        display: none !important;
+    }
 }
 @media only screen and (max-width: 991px) {
 	.header-nav .nav > li .sub-menu li .fa{
@@ -1326,3 +1326,11 @@ hr{
 		margin: -10px 0 0 -5px;
 	}
 }
+/*StyleWitcher*/
+/*.styleswitcher {
+    display: none !important;
+}
+
+.buy-now-btn {
+    display: none !important;
+}*/

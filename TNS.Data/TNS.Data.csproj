@@ -121,7 +121,64 @@
     <Compile Include="Migrations\202112150945029_DropProductIDinOrderDetail.designer.cs">
       <DependentUpon>202112150945029_DropProductIDinOrderDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112251538001_AddTotalDeposit.cs" />
+    <Compile Include="Migrations\202112251538001_AddTotalDeposit.designer.cs">
+      <DependentUpon>202112251538001_AddTotalDeposit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112251715546_ListOrderCartSP.cs" />
+    <Compile Include="Migrations\202112251715546_ListOrderCartSP.designer.cs">
+      <DependentUpon>202112251715546_ListOrderCartSP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201071238050_ChangKeyOrderDetail.cs" />
+    <Compile Include="Migrations\202201071238050_ChangKeyOrderDetail.designer.cs">
+      <DependentUpon>202201071238050_ChangKeyOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201071432504_AddColumnOrderID.cs" />
+    <Compile Include="Migrations\202201071432504_AddColumnOrderID.designer.cs">
+      <DependentUpon>202201071432504_AddColumnOrderID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201071501558_AddColumnIDinOrderDetail.cs" />
+    <Compile Include="Migrations\202201071501558_AddColumnIDinOrderDetail.designer.cs">
+      <DependentUpon>202201071501558_AddColumnIDinOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207241619401_ChangeListOrderCartSP.cs" />
+    <Compile Include="Migrations\202207241619401_ChangeListOrderCartSP.designer.cs">
+      <DependentUpon>202207241619401_ChangeListOrderCartSP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207241630473_ListOrderCart.cs" />
+    <Compile Include="Migrations\202207241630473_ListOrderCart.designer.cs">
+      <DependentUpon>202207241630473_ListOrderCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207260646119_AddListOrderDetail.cs" />
+    <Compile Include="Migrations\202207260646119_AddListOrderDetail.designer.cs">
+      <DependentUpon>202207260646119_AddListOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207260806063_AddListOrderDetail1.cs" />
+    <Compile Include="Migrations\202207260806063_AddListOrderDetail1.designer.cs">
+      <DependentUpon>202207260806063_AddListOrderDetail1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208081433446_EditOrderAndOrderDetail.cs" />
+    <Compile Include="Migrations\202208081433446_EditOrderAndOrderDetail.designer.cs">
+      <DependentUpon>202208081433446_EditOrderAndOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208081544034_Edit_ListOrderCart.cs" />
+    <Compile Include="Migrations\202208081544034_Edit_ListOrderCart.designer.cs">
+      <DependentUpon>202208081544034_Edit_ListOrderCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208151438512_modifytable.cs" />
+    <Compile Include="Migrations\202208151438512_modifytable.designer.cs">
+      <DependentUpon>202208151438512_modifytable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208231430431_thembangkygui.cs" />
+    <Compile Include="Migrations\202208231430431_thembangkygui.designer.cs">
+      <DependentUpon>202208231430431_thembangkygui.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208241457316_ListPackageCart.cs" />
+    <Compile Include="Migrations\202208241457316_ListPackageCart.designer.cs">
+      <DependentUpon>202208241457316_ListPackageCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\PackageDetailRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
     <Compile Include="Repositories\ApplicationRoleGroupRepository.cs" />
@@ -133,6 +190,7 @@
     <Compile Include="Repositories\FooterRepostitoy.cs" />
     <Compile Include="Repositories\OrderDetailRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\PackageRepository.cs" />
     <Compile Include="Repositories\SlideRepository.cs" />
     <Compile Include="Repositories\SystermConfigRepository.cs" />
     <Compile Include="TNSExampleDbContext.cs" />
@@ -174,6 +232,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112150945029_DropProductIDinOrderDetail.resx">
       <DependentUpon>202112150945029_DropProductIDinOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112251538001_AddTotalDeposit.resx">
+      <DependentUpon>202112251538001_AddTotalDeposit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112251715546_ListOrderCartSP.resx">
+      <DependentUpon>202112251715546_ListOrderCartSP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201071238050_ChangKeyOrderDetail.resx">
+      <DependentUpon>202201071238050_ChangKeyOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201071432504_AddColumnOrderID.resx">
+      <DependentUpon>202201071432504_AddColumnOrderID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201071501558_AddColumnIDinOrderDetail.resx">
+      <DependentUpon>202201071501558_AddColumnIDinOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207241619401_ChangeListOrderCartSP.resx">
+      <DependentUpon>202207241619401_ChangeListOrderCartSP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207241630473_ListOrderCart.resx">
+      <DependentUpon>202207241630473_ListOrderCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207260646119_AddListOrderDetail.resx">
+      <DependentUpon>202207260646119_AddListOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207260806063_AddListOrderDetail1.resx">
+      <DependentUpon>202207260806063_AddListOrderDetail1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208081433446_EditOrderAndOrderDetail.resx">
+      <DependentUpon>202208081433446_EditOrderAndOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208081544034_Edit_ListOrderCart.resx">
+      <DependentUpon>202208081544034_Edit_ListOrderCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208151438512_modifytable.resx">
+      <DependentUpon>202208151438512_modifytable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208231430431_thembangkygui.resx">
+      <DependentUpon>202208231430431_thembangkygui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208241457316_ListPackageCart.resx">
+      <DependentUpon>202208241457316_ListPackageCart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

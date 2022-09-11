@@ -1,0 +1,235 @@
+﻿@model TNS.Web.Infrastructure.Core.PaginationSet<TNS.Common.ViewModels.OrderClientViewModel>
+@{
+    var pageIndex = Model.Page;
+    ViewBag.Title = "Danh sách đơn hàng";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Danh sách đơn hàng</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Tìm kiếm đơn hàng</h3>
+
+                    <div class="card-tools">
+                        <button type="button"
+                                class="btn btn-tool"
+                                data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button"
+                                class="btn btn-tool"
+                                data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span>Trạng thái:</span>
+                            <a href="#"><span class="badge badge-secondary">Chờ xác nhận (0)</span></a>
+                            <a href="#"><span class="badge badge-dark">Đã xác nhận (0)</span></a>
+                            <a href="#"><span class="badge badge-primary">Đã đặt hàng (0)</span></a>
+                            <a href="#"><span class="badge badge-info">Kho TQ nhận (0)</span></a>
+                            <a href="#"><span class="badge badge-light">Xuất kho TQ (0)</span></a>
+                            <a href="#"><span class="badge badge-primary">Nhập kho VN (0)</span></a>
+                            <a href="#"><span class="badge badge-warning">Đang giao hàng (0)</span></a>
+                            <a href="#"><span class="badge badge-success">Đã giao hàng (0)</span></a>
+                            <a href="#"><span class="badge badge-danger">Đã hủy (0)</span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nhập mã đơn hàng</label>
+                                <input class="form-control" type="text" f>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nhập mã vận đơn</label>
+                                <input class="form-control" type="text" f>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3">
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label>Thời gian từ:</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>đến:</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary float-right">Tìm kiếm</button>
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Danh sách đơn đặt hàng</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table id="listorder"
+                                   class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Mã đơn hàng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Tình trạng</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listOrderBody">
+                                    @if (Model.Count > 0)
+                                    {
+                                        foreach (var order in Model.Items)
+                                        {
+                                            <tr class="cart_item">
+                                                <td id="CreatedDate">@order.CreatedDate</td>
+                                                <td><a href="danh-sach-don-hang/id=@(order.ID).html" id="@order.ID" target="_blank">@order.OrderCode</a></td>
+                                                <td>@order.ToTalVNPrice</td>
+                                                <td>@order.PaymentMethod</td>
+                                                <td id="PaymentStatus">
+                                                    <span class="@(order.PaymentStatus == 0 ? "badge badge-secondary" : order.PaymentStatus == 1 ? "badge badge-dark" : order.PaymentStatus == 2 ? "badge badge-primary" :
+                                                               order.PaymentStatus == 3 ? "badge badge-info" : order.PaymentStatus == 4 ? "badge badge-light" : order.PaymentStatus == 5 ? "badge badge-primary" : order.PaymentStatus == 6 ? "badge badge-warning" :
+                                                               order.PaymentStatus == 7 ? "badge badge-success" : "badge badge-danger")">
+                                                        @(order.PaymentStatus == 0 ? "Chờ xác nhận" : order.PaymentStatus == 1 ? "Đã xác nhận" : order.PaymentStatus == 2 ? "Đã đặt hàng" :
+                                                      order.PaymentStatus == 3 ? "Kho TQ nhận" : order.PaymentStatus == 4 ? "Xuất kho TQ" : order.PaymentStatus == 5 ? "Nhập kho VN" : order.PaymentStatus == 6 ? "Đang giao hàng" :
+                                                      order.PaymentStatus == 7 ? "Đã giao hàng" : "Đã hủy")
+                                                    </span>
+                                                </td>
+                                                <td><a href="danh-sach-don-hang/id=@(order.ID).html" id="@order.ID" target="_blank">Chi tiết</a></td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr class="cart_item">
+                                            <td colspan="6"><h3 class="text-danger text-center">Bạn chưa có đơn hàng nào.</h3></td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        @if (Model.TotalPages > 1)
+                        {
+                            // Create numeric links
+                            var startPageIndex = Math.Max(1, Model.Page - Model.MaxPage / 2);
+                            var endPageIndex = Math.Min(Model.TotalPages, Model.Page + Model.MaxPage / 2);
+
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-xs m-0 float-right">
+                                    @if (Model.Page > 1)
+                                    {
+                                        <li class="page-item"><a class="page-link" href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+                                        <li class="page-item"><a class="page-link" href="?page=@(Model.Page-1)"><i class="fa fa-angle-left"></i></a></li>
+                                    }
+                                    @for (int i = startPageIndex; i <= endPageIndex; i++)
+                                    {
+                                        if (Model.Page == i)
+                                        {
+                                            <li class="page-item active"><a class="page-link" href="?page=@i">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="page-item"><a class="page-link" href="?page=@i">@i</a></li>
+                                        }
+                                    }
+                                    @if (Model.Page < Model.TotalPages)
+                                    {
+                                        <li class="page-item"><a class="page-link" href="?page=@(Model.Page+1)"><i class="fa fa-angle-right"></i></a></li>
+                                        <li class="page-item"><a class="page-link" href="?page=@Model.TotalPages"><i class="fa fa-angle-double-right"></i></a></li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section footerJS{
+    <script>
+       @* $(function () {
+            $('#listorder').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+                "language": {
+                    "emptyTable": "Bạn chưa có đơn hàng nào hiện tại."
+                }
+            });
+        });*@
+    </script>
+    <script src="https://unpkg.com/mustache@4.1.0/mustache.js"></script>
+    <script src="~/Assets/libs/moment.js/moment.js"></script>
+    @*<script src="~/Assets/Client/js/controller/listOrderClient.js"></script>*@
+}

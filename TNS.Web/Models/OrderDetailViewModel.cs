@@ -8,7 +8,8 @@ namespace TNS.Web.Models
 {
     public class OrderDetailViewModel
     {
-        [Required]
+        public int ID { get; set; }
+
         public int OrderID { get; set; }
 
         public string TrackingID { get; set; }
@@ -21,12 +22,9 @@ namespace TNS.Web.Models
 
         public string Description { get; set; }
 
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
 
-        public decimal? CNPrice { get; set; }
-        public decimal? VNPrice { get; set; }
-
-        public decimal? ExchangeRate { get; set; }
+        public decimal CNPrice { get; set; }
 
     }
 }

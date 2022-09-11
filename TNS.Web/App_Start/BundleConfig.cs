@@ -9,75 +9,62 @@ namespace TNS.Web
         {
             bundles.UseCdn = true;
             bundles.Add(new ScriptBundle("~/js/jquery")
-                .Include("~/Assets/libs/jquery/dist/jquery.min.js"));
+            .Include("~/Assets/libs/jquery/jquery.js",
+                    "~/Assets/libs/jquery-migrate/jquery-migrate.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/js/bootstrap")
-               .Include("~/Assets/libs/bootstrap/dist/js/bootstrap.min.js"));
-
-            bundles.Add(new ScriptBundle("~/js/etalage")
-              .Include("~/Assets/Client/js/jquery.etalage.min.js"));
-
-            bundles.Add(new ScriptBundle("~/js/liveLocation")
-              .Include("~/Assets/Client/js/controllers/liveLocation.js"));
-
-            #region~/bundles/googleapis
-            var cdnPath = "~/https://maps.googleapis.com/maps/api/js?key=AIzaSyBzoQXEpc3J26EnYucyoyNFQsUDYL4Rpls";
-            bundles.Add(new ScriptBundle("~/bundles/googleapis",
-                "https://maps.googleapis.com/maps/api/js?key=AIzaSyBzoQXEpc3J26EnYucyoyNFQsUDYL4Rpls")
-                .Include(cdnPath));
-            #endregion
-            #region~/bundles/bsvalidator
-            bundles.Add(new ScriptBundle("~/bundles/bsvalidator")
-                .Include("~/Assets/libs/bootstrapValidator/dist/js/bootstrapValidator.min.js"));
-            #endregion
+            .Include("~/Assets/Client/plugins/bootstrap/js/popper.min.js",
+                    "~/Assets/Client/plugins/bootstrap/js/bootstrap.min.js",
+                    "~/Assets/Client/plugins/bootstrap-select/bootstrap-select.min.js",
+                    "~/Assets/Client/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"
+            ));
 
             #region~/bundles/mustache
             bundles.Add(new ScriptBundle("~/bundles/mustache")
-                .Include("~/Assets/libs/mustache/mustache.min.js"));
+                .Include("~/Assets/libs/mustache.js/mustache.js"));
             #endregion
 
             #region~/js/core
             bundles.Add(new ScriptBundle("~/js/core").Include(
-                "~/Assets/Client/js/custom.js",
-                "~/Assets/Client/js/dz.ajax.js",
-                "~/Assets/Client/js/dz.carousel.min.js",
-                "~/Assets/Client/js/html5shiv.min.js",
-                "~/Assets/Client/js/jquery.min.js",
-                "~/Assets/Client/js/respond.min.js",
-                "~/Assets/Client/js/rev.slider.js",
-                "~/Assets/Client/plugins/bootstrap/js/bootstrap-select.min.js",
-                "~/Assets/Client/plugins/bootstrap/js/bootstrap.min.js",
-                "~/Assets/Client/plugins/bootstrap/js/popper.min.js",
-                "~/Assets/Client/plugins/bootstrap/js/bootstrap-select.min.js",
-                "~/Assets/Client/plugins/bootstrap-select/bootstrap-select.min.js",
-                "~/Assets/Client/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js",
-                "~/Assets/Client/plugins/countdown/jquery.countdown.js",
-                "~/Assets/Client/plugins/counter/counterup.min.js",
-                "~/Assets/Client/plugins/counter/waypoints-min.js",
-                "~/Assets/Client/plugins/fontawesome/js/fontawesome-all.min.js",
-                "~/Assets/Client/plugins/imagesloaded/imagesloaded.js",
                 "~/Assets/Client/plugins/magnific-popup/magnific-popup.js",
+                "~/Assets/Client/plugins/counter/waypoints-min.js",
+                "~/Assets/Client/plugins/counter/counterup.min.js",
+                "~/Assets/Client/plugins/imagesloaded/imagesloaded.js",
                 "~/Assets/Client/plugins/masonry/masonry-3.1.4.js",
                 "~/Assets/Client/plugins/masonry/masonry.filter.js",
                 "~/Assets/Client/plugins/owl-carousel/owl.carousel.js",
-                "~/Assets/Client/plugins/scroll/scrollbar.min.js",
-                "~/Assets/Client/plugins/star-rating/jquery.star-rating-svg.js"
+                "~/Assets/Client/js/dz.carousel.js",
+                "~/Assets/Client/js/dz.ajax.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/jquery.themepunch.tools.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/jquery.themepunch.revolution.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.actions.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.carousel.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.kenburn.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.layeranimation.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.migration.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.navigation.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.parallax.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.slideanims.min.js",
+                "~/Assets/Client/plugins/revolution/revolution/js/extensions/revolution.extension.video.min.js",
+                "~/Assets/Client/js/rev.slider.js",
+                "~/Assets/Client/js/controller/common.js"
                 ));
             #endregion
             #region~/css/core
-            bundles.Add(new StyleBundle("~/css/core")
-                .Include("~/Assets/libs/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/libs/jquery-ui/themes/smoothness/jquery-ui.min.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/libs/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/libs/toastr/toastr.min.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/Client/css/owl.carousel.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/libs/icheck-bootstrap/icheck-bootstrap.min.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/Client/css/style.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/Client/css/etalage.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/Client/css/search-box.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/Client/css/customize.css", new CssRewriteUrlTransform())
-                .Include("~/Assets/Client/css/responsive.css", new CssRewriteUrlTransform()));
-
+            bundles.Add(new StyleBundle("~/css/coreclientadmin")
+                .Include("~/Assets/Admin/plugins/fontawesome-free/css/all.min.cs", new CssRewriteUrlTransform())
+                .Include("~/Assets/libs/loading-bar.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/libs/toastr.js/toastr.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/dist/css/adminlte.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/daterangepicker/daterangepicker.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/summernote/summernote-bs4.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css", new CssRewriteUrlTransform())
+                .Include("~/Assets/Admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css", new CssRewriteUrlTransform()));
             #endregion
             BundleTable.EnableOptimizations = true;
         }

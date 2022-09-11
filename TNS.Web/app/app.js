@@ -5,6 +5,7 @@
             'TNS.application_roles',
             'TNS.application_users',
             'TNS.orders',
+            'TNS.packages',
             'TNS.common'])
         .config(['localStorageServiceProvider', function (localStorageServiceProvider) {
             localStorageServiceProvider.setPrefix('ls');

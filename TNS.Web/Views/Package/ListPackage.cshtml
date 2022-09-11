@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "ListPackage";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Danh sách đơn hàng</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Tìm kiếm đơn ký gửi</h3>
+
+                    <div class="card-tools">
+                        <button type="button"
+                                class="btn btn-tool"
+                                data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button"
+                                class="btn btn-tool"
+                                data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span>Trạng thái:</span>
+                            <a href="#"><span class="badge badge-secondary">Khởi tạo (0)</span></a>
+                            <a href="#"><span class="badge badge-info">Kho TQ nhận (0)</span></a>
+                            <a href="#"><span class="badge badge-light">Xuất kho TQ (0)</span></a>
+                            <a href="#"><span class="badge badge-primary">Nhập kho VN (0)</span></a>
+                            <a href="#"><span class="badge badge-warning">Đang giao hàng (0)</span></a>
+                            <a href="#"><span class="badge badge-success">Đã giao hàng (0)</span></a>
+                            <a href="#"><span class="badge badge-danger">Đã hủy (0)</span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nhập mã đơn ký gửi</label>
+                                <input class="form-control" type="text" f>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nhập mã vận đơn</label>
+                                <input class="form-control" type="text" f>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3">
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label>Thời gian từ:</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>đến:</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary float-right">Tìm kiếm</button>
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Danh sách đơn đặt hàng</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table id="listpackage"
+                                   class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Mã đơn hàng</th>
+                                        <th>Chú thích</th>
+                                        <th>Tình trạng</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listPackageBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer clearfix">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script id="templateListCart" type="x-tmpl-mustache">
+        <tr class="cart_item">
+            <td id="CreatedDate">{{CreatedDate}}</td>
+            <td><a href="danh-sach-ky-gui/id={{ID}}.html" id="{{ID}}" target="_blank">{{PackageCode}}</a></td>
+            <td>{{CustomerMessage}}</td>
+            <td>{{PaymentMethod}}</td>
+            <td id="PaymentStatus"><span class="{{PaymentTag}}">{{PaymentStatus}}</span></td>
+            <td><a href="danh-sach-ky-gui/id={{ID}}.html" id="{{ID}}" target="_blank">Chi tiết</a></td>
+        </tr>
+</script>
+
+@section footerJS{
+    <script src="https://unpkg.com/mustache@4.1.0/mustache.js"></script>
+    <script src="~/Assets/libs/moment.js/moment.js"></script>
+    <script src="~/Assets/Client/js/controller/listPackageClient.js"></script>
+}
